@@ -1,51 +1,74 @@
-import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code"
-import { button as buttonStyles } from "@nextui-org/theme";
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+import { database, storage } from "@/core/config/AppwriteConfig";
+import Featured from "@/components/modules/Featured/featured";
+import { Metadata, ResolvingMetadata } from "next";
+import { Query } from "appwrite";
+import config from "@/core/config/constantes";
+import { GeneralSettingsModels } from "@/core/interfaces/general_settings";
+import { useGetSettings } from "@/hooks/useSettings";
+import settingsService from "@/core/services/settings.service";
+
+export async function generateMetadata(
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  try {
+    const setting = await settingsService.get();
+    const simple = storage.getFilePreview("logo", "logo-512", 800, 600);
+    const img800 = storage.getFilePreview("logo", "logo-512", 800, 600);
+    const img1800 = storage.getFilePreview("logo", "logo-512", 1800, 1600);
+
+    if (setting === null)
+      return {
+        title: "Not Found",
+        description: "The page you are looking for does not exist.",
+      };
+
+    return {
+      title: setting.documents[0].site_title,
+      description: setting.documents[0].site_description,
+      keywords: setting.documents[0].keywords,
+      openGraph: {
+        title: setting.documents[0].site_title,
+        description: setting.documents[0].site_description,
+        url: "/",
+        siteName: setting.documents[0].application_name,
+        images: [
+          {
+            url: img800.href,
+            width: 800,
+            height: 600,
+          },
+          {
+            url: img1800.href,
+            width: 1800,
+            height: 1600,
+            alt: "My custom alt",
+          },
+        ],
+        locale: "fr_US",
+        type: "website",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: setting.documents[0].site_title,
+        description: setting.documents[0].site_description,
+        siteId: "1467726470533754880",
+        creator: "@nextjs",
+        creatorId: "1467726470533754880",
+        images: [simple],
+      },
+    };
+  } catch (error) {
+    return {
+      title: "Page not found",
+      description: "The page you are trying to lod is not exist",
+    };
+  }
+}
 
 export default function Home() {
-	return (
-		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-			<div className="inline-block max-w-lg text-center justify-center">
-				<h1 className={title()}>Make&nbsp;</h1>
-				<h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
-				<br />
-				<h1 className={title()}>
-					websites regardless of your design experience.
-				</h1>
-				<h2 className={subtitle({ class: "mt-4" })}>
-					Beautiful, fast and modern React UI library.
-				</h2>
-			</div>
-
-			<div className="flex gap-3">
-				<Link
-					isExternal
-					href={siteConfig.links.docs}
-					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
-				>
-					Documentation
-				</Link>
-				<Link
-					isExternal
-					className={buttonStyles({ variant: "bordered", radius: "full" })}
-					href={siteConfig.links.github}
-				>
-					<GithubIcon size={20} />
-					GitHub
-				</Link>
-			</div>
-
-			<div className="mt-8">
-				<Snippet hideSymbol hideCopyButton variant="flat">
-					<span>
-						Get started by editing <Code color="primary">app/page.tsx</Code>
-					</span>
-				</Snippet>
-			</div>
-		</section>
-	);
+  return (
+    <section className="max-w-full  items-center justify-center gap-4 py-8 md:py-10">
+      <Featured />
+    </section>
+  );
 }

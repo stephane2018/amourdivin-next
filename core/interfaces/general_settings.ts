@@ -1,0 +1,71 @@
+import { Models } from "appwrite";
+
+type Permissions = {
+  read: any[];
+  write: any[];
+};
+
+export interface general_settings {
+  id: number;
+  site_lang: number;
+  multilingual_system: number;
+  show_hits: number;
+  facebook_app_id: number;
+  facebook_app_secret: number;
+  show_rss: number;
+  show_newsticker: number;
+  pagination_per_page: number;
+  google_analytics: string;
+  show_featured_section: string;
+  show_latest_posts: string;
+  pwa_status: string;
+  registration_system: string;
+  comment_system: string;
+  comment_approval_system: string;
+  show_post_author: string;
+  show_post_date: string;
+  menu_limit: string;
+  adsense_activation_code: string;
+  recaptcha_site_key: string;
+  recaptcha_secret_key: string;
+  recaptcha_lang: string;
+  emoji_reactions: string;
+  mail_contact_status: string;
+  mail_contact: string;
+  email_verification: string;
+  file_manager_show_files: string;
+  audio_download_button: string;
+  approve_added_user_posts: string;
+  approve_updated_user_posts: string;
+  timezone: string;
+  show_latest_posts_on_slider: string;
+  show_latest_posts_on_featured: string;
+  sort_slider_posts: string;
+  sort_featured_posts: string;
+  newsletter: string;
+  show_home_link: string;
+  post_format_article: string;
+  post_format_gallery: string;
+  post_format_sorted_list: string;
+  post_format_video: string;
+  post_format_audio: string;
+  post_format_trivia_quiz: string;
+  post_format_personality_quiz: string;
+  maintenance_mode_title: string;
+  maintenance_mode_description: string;
+  maintenance_mode_status: string;
+  sitemap_frequency: string;
+  sitemap_last_modification: string;
+  sitemap_priority: string;
+  show_user_email_on_profile: string;
+  cookie_prefix: string;
+  last_cron_update: string;
+  version: string;
+  google_analytics_id: string;
+  $createdAt: Date;
+  $collection: string;
+  $permissions: Permissions;
+  size: string;
+}
+
+export type GeneralSettingsModels = general_settings & Models.Document;
