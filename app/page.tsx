@@ -1,11 +1,13 @@
-import { database, storage } from "@/core/config/AppwriteConfig";
-import Featured from "@/components/modules/Featured/featured";
+import { storage } from "@/core/config/AppwriteConfig";
 import { Metadata, ResolvingMetadata } from "next";
-import { Query } from "appwrite";
-import config from "@/core/config/constantes";
-import { GeneralSettingsModels } from "@/core/interfaces/general_settings";
-import { useGetSettings } from "@/hooks/useSettings";
 import settingsService from "@/core/services/settings.service";
+import Featured from "./_components/Featured/featured";
+import { Avatar } from "@nextui-org/avatar";
+import ArticleByThemes from "./_components/Articles/article-by-theme";
+import ArticleHorizontalItem from "./_components/Articles/article-horizontal";
+import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
+import React from "react";
+import SidePopularArticle from "./_components/Sidebar/sidebar-popular-article";
 
 export async function generateMetadata(
   parent: ResolvingMetadata
@@ -26,6 +28,7 @@ export async function generateMetadata(
       title: setting.documents[0].site_title,
       description: setting.documents[0].site_description,
       keywords: setting.documents[0].keywords,
+
       openGraph: {
         title: setting.documents[0].site_title,
         description: setting.documents[0].site_description,
@@ -65,10 +68,36 @@ export async function generateMetadata(
   }
 }
 
-export default function Home() {
+export default function Page({
+  feature,
+}: {
+  children: React.ReactNode;
+  feature: React.ReactNode;
+}) {
   return (
-    <section className="max-w-full  items-center justify-center gap-4 py-8 md:py-10">
+    <section className="max-w-full  items-center justify-center gap-4 py-2 md:py-5">
       <Featured />
+      <ArticleByThemes />
+      <div className="gap-4 grid grid-cols-12 w-full mt-4">
+        <div className="col-span-8 w-full">
+          <div className="col-span-12">
+            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-bl from-yellow-300 to-primary-900 ">
+              Articles recentes{" "}
+            </h1>
+            <h4 className="font-normal">
+              {" "}
+              Les enseignements classes par thèmes{" "}
+            </h4>
+          </div>
+          <div className=" gap-3">
+            <ArticleHorizontalItem article={[]} />
+            <ArticleHorizontalItem article={[]} />
+          </div>
+        </div>
+        <div className="flex-col col-span-4 w-full ">
+          <SidePopularArticle />
+        </div>
+      </div>
     </section>
   );
 }

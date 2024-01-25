@@ -26,4 +26,5 @@ class GeneraleSettingService {
     }
   }
 }
-export default new GeneraleSettingService();
+const GeneralSettingsService = new GeneraleSettingService();
+export default GeneralSettingsService;

@@ -1,6 +1,6 @@
 import { Models, Query } from "appwrite";
 import config from "../config/constantes";
-import { databases } from "../config/AppwriteConfig";
+import { database } from "../config/AppwriteConfig";
 
 class GeneriqueService {
   private databaseId: string;
@@ -14,7 +14,7 @@ class GeneriqueService {
     condition?: string[]
   ): Promise<T | null> {
     try {
-      const promise = await databases.listDocuments<T>(
+      const promise = await database.listDocuments<T>(
         this.databaseId,
         CollectionName,
         condition ?? [Query.limit(1), Query.orderDesc("$createdAt")]
@@ -30,7 +30,7 @@ class GeneriqueService {
     condition?: string[]
   ): Promise<Models.DocumentList<T> | null> {
     try {
-      const promise = await databases.listDocuments<T>(
+      const promise = await database.listDocuments<T>(
         this.databaseId,
         CollectionName,
         condition
@@ -43,7 +43,7 @@ class GeneriqueService {
 
   public Save(CollectionName: string, id: string, data: any) {
     try {
-      const result = databases.createDocument(
+      const result = database.createDocument(
         this.databaseId,
         CollectionName,
         id,

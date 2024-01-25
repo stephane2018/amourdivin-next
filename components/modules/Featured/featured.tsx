@@ -4,13 +4,16 @@ import FeaturedLoading from "./featured-loading";
 import { GetFeatured } from "@/hooks/usePostes";
 import { Postes } from "../../../core/interfaces/posts";
 import posteService from "@/core/services/poste.service";
+import { StorageUrlBuilder, disPlayImageUrl } from "@/core/utils/helpers.utils";
+import FeatureUserInfos from "./feature-user-infos";
+import moment from "moment";
 
 async function getPostes() {
-  let isLoading = false;
+  let isLoading = true;
   const res = await posteService
     .GetFeatured()
     .then((result) => {
-      isLoading = true;
+      isLoading = false;
       return result?.documents;
     })
     .catch(() => {
@@ -26,27 +29,28 @@ async function getPostes() {
 
 export default async function Featured() {
   const { data, isLoading } = await getPostes();
-  console.log(data);
-  console.log(isLoading);
+
   if (isLoading === true) return <FeaturedLoading isLoaded={isLoading} />;
+  if (data === undefined) return null;
 
   return (
     <div className="max-w-full  gap-2 grid grid-cols-12 grid-rows-2 px-8">
       <Card className="col-span-12 sm:col-span-4 h-[300px]">
         <CardHeader className="absolute z-10 top-1 flex-col !items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">
-            GetFeatured
+            {moment(data[0]?.created_at.toString()).format("DD/MM/YYYY")}{" "}
           </p>
-          <h4 className="text-white font-medium text-large">
-            Stream the Acme event
-          </h4>
+          <h4 className="text-white font-medium text-large">{data[0].title}</h4>
         </CardHeader>
         <Image
           removeWrapper
           alt="Card background"
           className="z-0 w-full h-full object-cover"
-          src="https://images.unsplash.com/photo-1683009427051-00a2fe827a2c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8"
+          src={disPlayImageUrl(data[0].image_default || "")}
         />
+        <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+          <FeatureUserInfos poste={data[0]} />
+        </CardFooter>
       </Card>
       <Card className="col-span-12 sm:col-span-4 h-[300px]">
         <CardHeader className="absolute z-10 top-1 flex-col !items-start">

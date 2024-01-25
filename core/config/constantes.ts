@@ -2,6 +2,7 @@ const config = {
   DatabaseUrl: "amourdivin",
   collectionNames: {
     poste: "648db34bdfd761afd139",
+    categories: "categories",
     tags: "tags",
     audios: "Audios",
     pages: "pages",

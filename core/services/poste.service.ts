@@ -5,7 +5,7 @@ import { GeneralSettingsModels } from "../interfaces/general_settings";
 import { SettingsModels } from "../interfaces/settings";
 import { Postes, PostsModels } from "../interfaces/posts";
 
-class PostegService {
+class PosteService {
   private databaseId: string;
 
   private CollectionName: string;
@@ -57,4 +57,7 @@ class PostegService {
     }
   }
 }
-export default new PostegService();
+
+const PostesServices = new PosteService();
+
+export default PostesServices;

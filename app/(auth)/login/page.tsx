@@ -23,7 +23,6 @@ export default function Home() {
   const {
     control,
     handleSubmit,
-
     formState: { errors },
   } = useForm<ILogin>({
     resolver: yupResolver(LoginSchema),

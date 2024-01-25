@@ -37,7 +37,7 @@
     "framer-motion": "^10.16.16",
     "intl-messageformat": "^10.5.0",
     "lucide-react": "^0.294.0",
-    "moment": "^2.29.4",
+    "moment": "^2.30.1",
     "next": "14.0.2",
     "next-themes": "^0.2.1",
     "postcss": "8.4.31",

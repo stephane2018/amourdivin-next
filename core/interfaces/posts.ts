@@ -281,4 +281,4 @@ export type UpdateData = Omit<
   | "$databaseId"
 >;
 
-export type PostsModels = Postes & Models.Document;
+export type IPostsModels = Postes & Models.Document;

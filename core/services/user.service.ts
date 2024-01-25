@@ -149,7 +149,8 @@ class UserService {
         this.CollectionName,
         [Query.equal("id", id), Query.orderDesc("created_at")]
       );
-      return Promise.resolve(result);
+
+      return Promise.resolve(result.documents[0]);
     } catch (error: any) {
       return Promise.reject(error);
     }

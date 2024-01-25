@@ -6,7 +6,6 @@ import { SettingsModels } from "../interfaces/settings";
 
 class SettingService {
   private databaseId: string;
-
   private CollectionName: string;
 
   constructor() {

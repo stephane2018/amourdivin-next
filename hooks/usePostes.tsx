@@ -4,11 +4,10 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Models } from "appwrite";
 
 /**
- *
  * @returns
  */
 const GetFeatured = () => {
-  return useQuery<Models.DocumentList<PostsModels>, Error>({
+  return useQuery({
     queryKey: [`Featured`],
     queryFn: () => posteService.GetFeatured(),
   });
