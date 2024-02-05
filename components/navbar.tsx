@@ -88,10 +88,10 @@ export const Navbar = () => {
         <NavbarItem className="hidden md:flex">
           <Button
             as={Link}
-            className="text-sm font-normal text-default-600 bg-default-100"
+            className="text-sm font-normal text-white bg-primary-700"
             href={"/login"}
-            startContent={<User className="text-primary-600" />}
-            variant="shadow"
+            startContent={<User className="text-white" />}
+            variant="solid"
           >
             Login
           </Button>

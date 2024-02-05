@@ -31,18 +31,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  featured,
 }: {
   children: React.ReactNode;
+  featured: React.ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
       <body
         className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-h-screen font-sans antialiased  dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2]",
           fontSans.variable
         )}
       >
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,green)]"></div>
+
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex  flex-col h-screen">
             <Navbar />

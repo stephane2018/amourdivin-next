@@ -20,6 +20,19 @@ export const getUrl = (url: string) => {
 export const StorageUrlBuilder = (imageId: string, bucketId = "images") => {
   return `${Server.endpoint}/storage/buckets/${bucketId}/files/${imageId}/view?project=${Server.project}&mode=admin`;
 };
+
+export const disPlayImageForFrontUrl = (url: string, getImgId = false) => {
+  const CleanUrl =
+    getImgId === true && url?.includes("/v1/storage/buckets/")
+      ? url.split("/", 7).at(6)
+      : url?.includes("/v1/storage/buckets/") && getImgId === false
+      ? `${Server.endpoint}/storage/buckets/images/files/${url
+          .split("/", 10)
+          .at(8)}/view?project=${Server.project}`
+      : getUrl(url);
+
+  return CleanUrl || "";
+};
 export const StorageUrlAudiosBuilder = (
   imageId: string,
   bucketId = "audios"

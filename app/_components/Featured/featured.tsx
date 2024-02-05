@@ -59,7 +59,7 @@ export default async function Featured() {
           <FeatureUserInfos poste={data[0]} />
         </CardFooter>
       </Card>
-      <Card className="col-span-12 sm:col-span-3 h-[300px]">
+      <Card className="col-span-12 sm:col-span-6 h-[300px]">
         <CardHeader className="absolute z-10 bg-gradient-to-b from-black/90 to-white/2  flex-col !items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">
             {moment(data[1]?.created_at.toString()).format("DD/MM/YYYY")}
@@ -77,31 +77,14 @@ export default async function Featured() {
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
       </Card>
-      <Card className="col-span-12 sm:col-span-3 h-[300px]">
-        <CardHeader className="absolute z-10   bg-gradient-to-b from-black/90 to-white/2 flex-col !items-start">
-          <p className="text-tiny text-white/60 uppercase font-bold">
-            {moment(data[2]?.created_at.toString()).format("DD/MM/YYYY")}
-          </p>
-          <h4 className="text-white font-medium ">{data[2].title}</h4>
-        </CardHeader>
-        <Image
-          removeWrapper
-          alt="Card background"
-          className="z-0 w-full h-full object-cover"
-          src={disPlayImageUrl(data[2].image_default || "")}
-        />
-        <IconHandler
-          type={getTypeOfArticiles(data[2].post_type)}
-          className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
-        />
-      </Card>
+
       <Card
         isFooterBlurred
         className="w-full h-[300px] col-span-12 sm:col-span-5"
       >
         <CardHeader className="absolute z-10 bg-gradient-to-b from-black/90 to-white/2 flex-col items-start">
           <p className="text-tiny text-white/60    uppercase font-bold">
-            {moment(data[3]?.created_at.toString()).format("DD/MM/YYYY")}
+            {moment(data[2]?.created_at.toString()).format("DD/MM/YYYY")}
           </p>
           <h4 className="text-white font-medium ">{data[3].title}</h4>
         </CardHeader>
@@ -109,13 +92,13 @@ export default async function Featured() {
           removeWrapper
           alt="Card example background"
           className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-          src={disPlayImageUrl(data[3].image_default || "")}
+          src={disPlayImageUrl(data[2].image_default || "")}
         />
         <IconHandler
-          type={getTypeOfArticiles(data[3].post_type)}
+          type={getTypeOfArticiles(data[2].post_type)}
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
-        <CardFooter className="absolute bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+        <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
           <FeatureUserInfos poste={data[3]} />
         </CardFooter>
       </Card>
@@ -125,7 +108,7 @@ export default async function Featured() {
       >
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">
-            {moment(data[4]?.created_at.toString()).format("DD/MM/YYYY")}
+            {moment(data[3]?.created_at.toString()).format("DD/MM/YYYY")}
           </p>
           <h4 className="text-white/90 font-medium ">{data[3].title}</h4>
         </CardHeader>
@@ -133,14 +116,14 @@ export default async function Featured() {
           removeWrapper
           alt="Relaxing app background"
           className="z-0 w-full h-full object-cover"
-          src={disPlayImageUrl(data[4].image_default || "")}
+          src={disPlayImageUrl(data[3].image_default || "")}
         />
         <IconHandler
           type={getTypeOfArticiles(data[4].post_type)}
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-          <FeatureUserInfos poste={data[4]} />
+          <FeatureUserInfos poste={data[3]} />
         </CardFooter>
       </Card>
     </div>

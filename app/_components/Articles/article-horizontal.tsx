@@ -7,78 +7,101 @@ import {
 } from "@nextui-org/react";
 import React, { FC } from "react";
 import { Avatar, Badge, Button, Chip, Image, Link } from "@nextui-org/react";
-import { ClimpText } from "@/core/utils/helpers.utils";
-import { BellDot } from "lucide-react";
+import {
+  ClimpText,
+  disPlayImageForFrontUrl,
+  getTypeOfArticiles,
+} from "@/core/utils/helpers.utils";
+import { BellDot, Clock, Eye, MessageCircle } from "lucide-react";
 import { IPostsModels } from "@/core/interfaces/posts";
-
+import CategorieChip from "../categories/categories-type";
+import moment from "moment";
+import "moment/locale/fr";
+import IconHandler from "@/components/modules/ImagesAndIcones/IconeHandler";
+import UserInfosChip from "../users/user-infos";
+moment.locale("fr");
 interface IArticleH {
-  article: IPostsModels | [];
+  article: IPostsModels | undefined;
 }
 const ArticleHorizontalItem: FC<IArticleH> = ({ article }) => {
-  // You can add any UI inside Loading, including a Skeleton.
   return (
-    <Card className="border-none bg-background/60 dark:bg-gray-900/20 w-full  md:max-w-3xl my-3">
-      <CardBody className="flex flex-row flex-grow gap-4 h-full ">
-        <Image
-          alt="Card background"
-          isZoomed
-          className="object-cover rounded-xl    h-56"
-          src="https://plus.unsplash.com/premium_photo-1702249257777-927e3857a56b?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        />
-        <div className="flex flex-col w-full gap-3">
+    <Card className="  hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl my-3">
+      <CardBody className="grid grid-cols-5 gap-3 h-full ">
+        <div className="gap-2 col-span-2 w-full relative">
+          <Image
+            alt="Card background"
+            width={220}
+            className="object-cover rounded-xl  h-[8rem] md:h-[10rem]"
+            src={disPlayImageForFrontUrl(article?.image_default || "")}
+          />
+          {article?.post_type && (
+            <Button
+              isIconOnly
+              className=" h-10  z-10 top-[40%] left-[40%] absolute items-center flex justify-items-center rounded-full bg-foreground-100/40"
+            >
+              <IconHandler
+                type={getTypeOfArticiles(article?.post_type || "")}
+                className="text-white shadow-xl items-center mx-auto"
+              />
+            </Button>
+          )}
+        </div>
+        <div className="col-span-3 flex-col w-full gap-3 mr-3">
           <div className="flex justify-between">
-            <Chip size="sm">Chip</Chip>
-            <div></div>
+            {article?.category_id && (
+              <CategorieChip id={article?.category_id} />
+            )}
+            <div className="item-center justify-center gap-3 ">
+              <h4 className="text-[0.60rem] md:text-xs cursor-pointer font-semibold leading-none text-default-600">
+                {moment(article?.created_at.toString()).fromNow(true)}(
+                {moment(article?.created_at.toString()).format("DD-MM-YYYY")})
+              </h4>
+            </div>
           </div>
-          <Link href="#">
-            <p className="line-clamp-2 cursor-pointer  font-bold text-black dark:text-white  ">
-              {ClimpText(
-                "fdshdfdlkas fhsakljf dhsjkafhdjks hfds kaflhdsfjkldsffdshfdskajfhdksajfhdjksfjkdsafh",
-                150
-              )}
+          <Link href="#" className="mb-4 w-full">
+            <p className="line-clamp-2 text-sm cursor-pointer font-bold text-black dark:text-white  ">
+              {ClimpText(article?.title || "", 180)}
             </p>
           </Link>
-          <p className="line-clamp-3 cursor-pointer text-sm text-default-500 text-black/60 dark:text-gray-300 ">
-            {ClimpText(
-              "fdshdfdlkas fhsakljf dhsjkafhdjks hfds kaflhdsfjkldsffdshfdskajfhdksajfhdjksfjkdsafh dkhdsfkyas fdhifyhafhdfjkdkjslahfdskfhdsafl dhjf dhsafhdjsfhdksahf safk h",
-              200
-            )}
+          <p className="line-clamp-2  cursor-pointer text-[0.60rem] md:text-sm text-default-500 text-black/60 dark:text-gray-300 ">
+            {ClimpText(article?.summary || "", 180)}
           </p>
           <div className="flex justify-between items-start pt-3">
-            <div className="flex gap-2 rounded-lg">
-              <Avatar
-                isBordered
-                radius="md"
-                size="sm"
-                src="https://plus.unsplash.com/premium_photo-1702249257777-927e3857a56b?q=80&w=2370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              />
-              <div className="flex flex-col gap-1 items-start justify-center">
-                <h4 className="text-xs cursor-pointer font-semibold leading-none text-default-600">
-                  Zoey Lang
-                </h4>
-                <h5 className="text-xs cursor-pointer tracking-tight text-default-400">
-                  @zoeylang
-                </h5>
-              </div>
-            </div>
+            {article?.category_id && (
+              <UserInfosChip id={article?.user_id || ""} />
+            )}
 
             <div className="flex gap-2 justify-between ml-4">
-              <Button
-                variant="light"
-                radius="full"
-                aria-label="more than 99 notifications"
-              >
-                <BellDot size={15} />
-                1234
-              </Button>
-              <Button
-                radius="full"
-                aria-label="more than 99 notifications"
-                variant="light"
-              >
-                <BellDot size={15} />
-                1234
-              </Button>
+              <div className="hidden md:flex">
+                <Button
+                  variant="light"
+                  radius="lg"
+                  size="sm"
+                  aria-label="more than 99 notifications"
+                >
+                  <MessageCircle size={15} className="hide" />
+                  <p>1234</p>
+                </Button>
+                <Button
+                  radius="lg"
+                  aria-label="more than 99 notifications"
+                  variant="light"
+                  size="sm"
+                >
+                  <Eye size={15} />
+                  1234
+                </Button>
+              </div>
+              <div className="flex md:hidden gap-3">
+                <div className="flex gap-1 cursor-pointer bg-default-300 text-xs bg-inherit justify-center items-center">
+                  <MessageCircle size={10} />
+                  <p>1234</p>
+                </div>
+                <div className="flex text-xs cursor-pointer bg-default-100 items-center gap-2 bg-inherit">
+                  <Eye size={10} />
+                  1234
+                </div>
+              </div>
             </div>
           </div>
         </div>

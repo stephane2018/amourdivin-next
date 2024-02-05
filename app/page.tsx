@@ -5,9 +5,21 @@ import Featured from "./_components/Featured/featured";
 import { Avatar } from "@nextui-org/avatar";
 import ArticleByThemes from "./_components/Articles/article-by-theme";
 import ArticleHorizontalItem from "./_components/Articles/article-horizontal";
-import { Tabs, Tab, Card, CardBody, CardHeader } from "@nextui-org/react";
+import {
+  Tabs,
+  Tab,
+  Card,
+  CardBody,
+  CardHeader,
+  Button,
+} from "@nextui-org/react";
 import React from "react";
 import SidePopularArticle from "./_components/Sidebar/sidebar-popular-article";
+import ArticleHorizontalSmallItem from "./_components/Articles/article-horizontal-small";
+import { ListTodo } from "lucide-react";
+import CategoriesHeader from "@/components/modules/categories/categorie-header";
+import Sidebar from "./_components/Sidebar/sidebar";
+import LoadMoreArticles from "./_components/Articles/LoadMoreArticles";
 
 export async function generateMetadata(
   parent: ResolvingMetadata
@@ -68,34 +80,22 @@ export async function generateMetadata(
   }
 }
 
-export default function Page({
-  feature,
-}: {
-  children: React.ReactNode;
-  feature: React.ReactNode;
-}) {
+export default function Page({}: { children: React.ReactNode }) {
   return (
-    <section className="max-w-full  items-center justify-center gap-4 py-2 md:py-5">
+    <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
       <Featured />
       <ArticleByThemes />
-      <div className="gap-4 grid grid-cols-12 w-full mt-4">
-        <div className="col-span-8 w-full">
+      <div className="gap-4 mx-auto container grid grid-cols-1 md:grid-cols-12 w-full mt-4">
+        <div className="col-span-7 w-full">
           <div className="col-span-12">
-            <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-bl from-yellow-300 to-primary-900 ">
-              Articles recentes{" "}
-            </h1>
-            <h4 className="font-normal">
-              {" "}
-              Les enseignements classes par thèmes{" "}
-            </h4>
+            <CategoriesHeader hideIcon={false} title={"Article Recent"} />
           </div>
           <div className=" gap-3">
-            <ArticleHorizontalItem article={[]} />
-            <ArticleHorizontalItem article={[]} />
+            <LoadMoreArticles />
           </div>
         </div>
-        <div className="flex-col col-span-4 w-full ">
-          <SidePopularArticle />
+        <div className="flex-col col-span-5 w-full ">
+          <Sidebar />
         </div>
       </div>
     </section>
