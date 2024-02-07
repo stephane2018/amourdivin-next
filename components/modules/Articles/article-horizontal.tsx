@@ -12,13 +12,13 @@ import {
   disPlayImageForFrontUrl,
   getTypeOfArticiles,
 } from "@/core/utils/helpers.utils";
-import { BellDot, Clock, Eye, MessageCircle } from "lucide-react";
 import { IPostsModels } from "@/core/interfaces/posts";
 import CategorieChip from "../categories/categories-type";
 import moment from "moment";
 import "moment/locale/fr";
 import IconHandler from "@/components/modules/ImagesAndIcones/IconeHandler";
 import UserInfosChip from "../users/user-infos";
+import ArticleComment from "../comments/article-comments";
 moment.locale("fr");
 interface IArticleH {
   article: IPostsModels | undefined;
@@ -72,36 +72,10 @@ const ArticleHorizontalItem: FC<IArticleH> = ({ article }) => {
             )}
 
             <div className="flex gap-2 justify-between ml-4">
-              <div className="hidden md:flex">
-                <Button
-                  variant="light"
-                  radius="lg"
-                  size="sm"
-                  aria-label="more than 99 notifications"
-                >
-                  <MessageCircle size={15} className="hide" />
-                  <p>1234</p>
-                </Button>
-                <Button
-                  radius="lg"
-                  aria-label="more than 99 notifications"
-                  variant="light"
-                  size="sm"
-                >
-                  <Eye size={15} />
-                  1234
-                </Button>
-              </div>
-              <div className="flex md:hidden gap-3">
-                <div className="flex gap-1 cursor-pointer bg-default-300 text-xs bg-inherit justify-center items-center">
-                  <MessageCircle size={10} />
-                  <p>1234</p>
-                </div>
-                <div className="flex text-xs cursor-pointer bg-default-100 items-center gap-2 bg-inherit">
-                  <Eye size={10} />
-                  1234
-                </div>
-              </div>
+              <ArticleComment
+                view={article?.pageviews || 0}
+                id={article?.user_id || ""}
+              />
             </div>
           </div>
         </div>

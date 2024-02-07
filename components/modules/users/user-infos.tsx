@@ -1,39 +1,21 @@
 /* eslint-disable @next/next/no-async-client-component */
-import { ICategories } from "@/core/interfaces/categories";
+"use client";
 import { IUserModels } from "@/core/interfaces/user.interface";
-import CategorieServices from "@/core/services/categories.service";
 import userService from "@/core/services/user.service";
-import {
-  disPlayImageForFrontUrl,
-  disPlayImageUrl,
-} from "@/core/utils/helpers.utils";
-import { Link } from "@nextui-org/link";
+import { disPlayImageUrl } from "@/core/utils/helpers.utils";
+import { useGetUserById } from "@/hooks/useUser";
 import { Avatar, Skeleton } from "@nextui-org/react";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
 export default function UserInfosChip({ id }: { id: string }) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { data, isLoading } = useGetUserById(id);
   const [userInfos, setUserInfos] = useState<IUserModels | null>(null);
-  const getUserInfos = useCallback(async (id: string) => {
-    return userService
-      .GetUserById(id)
-      .then((result) => {
-        setIsLoading(false);
-        return result;
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        throw new Error("Failed to fetch data");
-      });
-  }, []);
 
   useEffect(() => {
-    if (id) {
-      getUserInfos(id).then((item) => {
-        setUserInfos(item[0]);
-      });
+    if (data) {
+      setUserInfos(data);
     }
-  }, [getUserInfos, id]);
+  }, [data]);
 
   return isLoading ? (
     <Skeleton className="flex rounded-md w-6 h-6" />

@@ -84,3 +84,55 @@ export function ClimpText(itemText: string, maxLengthOfLink = 120) {
   });
   // you can read more about the reduce function on mozilla.org
 }
+
+export function formatDateTime(date: string) {
+  const d = new Date(date);
+  let month = `${d.getMonth() + 1}`;
+  let day = `${d.getDate()}`;
+  const year = d.getFullYear();
+
+  if (month.length < 2) month = `0${month}`;
+  if (day.length < 2) day = `0${day}`;
+
+  return [year, month, day].join("-");
+}
+
+export function getCurrentWeek() {
+  const today = new Date();
+  const firstDay = getFirstDayOfWeek(today.toString());
+
+  const lastDay = new Date(firstDay);
+  lastDay.setDate(lastDay.getDate() + 6);
+
+  return {
+    debut: formatDateTime(firstDay.toString()),
+    fin: formatDateTime(lastDay.toString()),
+  };
+}
+function getFirstDayOfWeek(d: string) {
+  const date = new Date(d);
+  const day = date.getDay();
+  const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(date.setDate(diff));
+}
+
+export function getCurrentMonth() {
+  const date = new Date();
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+  return {
+    debut: formatDateTime(firstDay.toString()),
+    fin: formatDateTime(lastDay.toString()),
+  };
+}
+export function getCurrentYear() {
+  const date = new Date();
+  const firstDay = new Date(date.getFullYear(), 0, 1);
+  const lastDay = new Date(date.getFullYear(), 11, 31);
+
+  return {
+    debut: formatDateTime(firstDay.toString()),
+    fin: formatDateTime(lastDay.toString()),
+  };
+}

@@ -4,12 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { Models } from "appwrite";
 
 export function useGetUserById(id: string | false) {
-  return useQuery<Models.DocumentList<IUserModels>, Error>({
+  return useQuery({
     queryKey: [`Users/${id}`],
-    queryFn: () => {
-      console.log(userService.GetUserById(id));
-      return userService.GetUserById(id);
-    },
+    queryFn: () => userService.GetUserById(id),
     enabled: Boolean(id),
   });
 }

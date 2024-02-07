@@ -1,12 +1,6 @@
 import { storage } from "@/core/config/AppwriteConfig";
-import { Metadata, ResolvingMetadata } from "next";
 import settingsService from "@/core/services/settings.service";
-import React from "react";
-import CategoriesHeader from "@/components/modules/categories/categorie-header";
-import Featured from "@/components/modules/Featured/featured";
-import ArticleByThemes from "@/components/modules/Articles/article-by-theme";
-import LoadMoreArticles from "@/components/modules/Articles/LoadMoreArticles";
-import Sidebar from "@/components/modules/Sidebar/sidebar";
+import { Metadata, ResolvingMetadata } from "next";
 
 export async function generateMetadata(
   parent: ResolvingMetadata
@@ -68,23 +62,5 @@ export async function generateMetadata(
 }
 
 export default function Page({}: { children: React.ReactNode }) {
-  return (
-    <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
-      <Featured />
-      <ArticleByThemes />
-      <div className="gap-4 mx-auto container grid grid-cols-1 md:grid-cols-12 w-full mt-4">
-        <div className="col-span-7 w-full">
-          <div className="col-span-12">
-            <CategoriesHeader hideIcon={false} title={"Article Recent"} />
-          </div>
-          <div className=" gap-3">
-            <LoadMoreArticles />
-          </div>
-        </div>
-        <div className="flex-col col-span-5 w-full ">
-          <Sidebar />
-        </div>
-      </div>
-    </section>
-  );
+  return <div>ndfkssdfjk</div>;
 }

@@ -1,5 +1,3 @@
-import { Models } from "appwrite";
-
 type Permissions = {
   read: any[];
   write: any[];
@@ -67,5 +65,3 @@ export interface general_settings {
   $permissions: Permissions;
   size: string;
 }
-
-export type IGeneralSettingsModels = general_settings & Models.Document;

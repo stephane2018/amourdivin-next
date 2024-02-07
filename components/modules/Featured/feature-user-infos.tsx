@@ -1,4 +1,4 @@
-import { PostsModels } from "@/core/interfaces/posts";
+import { IPostsModels } from "@/core/interfaces/posts";
 import CategorieServices from "@/core/services/categories.service";
 import userService from "@/core/services/user.service";
 import { disPlayImageUrl } from "@/core/utils/helpers.utils";
@@ -8,29 +8,28 @@ import { useQuery } from "@tanstack/react-query";
 import { Eye, MessageCircle } from "lucide-react";
 
 async function getFeatured(userId: string, posteId: string) {
-  console.log(posteId);
   let isLoading = true;
-  const userInfo = await userService.GetUserById(userId);
-  const categories = await CategorieServices.getCategoriesParentBaseOnChild(
-    posteId
-  );
-  console.log(categories);
+  const userInfos = await userService.GetUserById(userId);
+  const categorie = (
+    await CategorieServices.getCategoriesParentBaseOnChild(posteId)
+  )[0];
+
   return {
     data: {
-      userInfo: userInfo[0],
-      categories: categories,
+      userInfos,
+      categorie,
     },
     isLoading: isLoading,
   };
 }
 
 interface FeaturedProps {
-  poste: PostsModels;
+  poste: IPostsModels;
 }
 
 const FeatureUserInfos = async ({ poste }: FeaturedProps) => {
   const {
-    data: { userInfo, categories },
+    data: { userInfos, categorie },
     isLoading,
   } = await getFeatured(poste.user_id || "", poste.category_id);
 
@@ -40,10 +39,10 @@ const FeatureUserInfos = async ({ poste }: FeaturedProps) => {
         <Image
           alt="Breathing app icon"
           className="rounded-full w-10 h-10 bg-black"
-          src={disPlayImageUrl(userInfo.avatar || "")}
+          src={disPlayImageUrl(userInfos.avatar || "")}
         />
         <div className="flex flex-col gap-1">
-          <p className="text-tiny text-white/60">{userInfo.username || ""}</p>
+          <p className="text-tiny text-white/60">{userInfos.username || ""}</p>
           <div className="justify-between">
             <div className=" flex text-xs font-semibold">
               <span className="mt-0 inline-flex items-center leading-none text-gray-400">
@@ -59,8 +58,15 @@ const FeatureUserInfos = async ({ poste }: FeaturedProps) => {
           </div>
         </div>
       </div>
-      <Button radius="full" size="sm">
-        Get App
+
+      <Button
+        style={{
+          backgroundColor: categorie.color,
+        }}
+        radius="full"
+        size="sm"
+      >
+        {categorie.name}
       </Button>
     </div>
   );

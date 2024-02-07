@@ -1,9 +1,10 @@
-export async function LoadAtticle({
-  limit,
-  offset,
-}: {
-  limit: number;
-  offset: number;
-}) {
-  return;
+export async function SubscribeToNewsLetter(
+  prevState: {
+    message: string;
+  },
+  formData: FormData
+) {
+  return {
+    message: "fdskjfhskjf",
+  };
 }

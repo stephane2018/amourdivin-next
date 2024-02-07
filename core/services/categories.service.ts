@@ -69,6 +69,18 @@ class CategorieService {
       return Promise.reject(error);
     }
   }
+  public async getCategoriesParents() {
+    try {
+      const categories = await database.listDocuments<ICategories>(
+        this.databaseId,
+        this.CollectionName,
+        [Query.equal("parent_id", "0"), Query.orderAsc("created_at")]
+      );
+      return Promise.resolve(categories || []);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 const CategorieServices = new CategorieService();

@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-async-client-component */
+"use client";
 import { ICategories } from "@/core/interfaces/categories";
 import CategorieServices from "@/core/services/categories.service";
 import { Link } from "@nextui-org/link";

@@ -4,11 +4,15 @@ import { Card, CardBody } from "@nextui-org/card";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import { CalendarDays } from "lucide-react";
 import React from "react";
-import ArticleHorizontalItem from "../Articles/article-horizontal";
 import ArticleHorizontalSmallItem from "../Articles/article-horizontal-small";
+import PopularArticleWeek from "./components/popular-article-week";
+import PopularArticleMonth from "./components/popular-article-month";
+import PopularArticleYear from "./components/popular-article-year";
+import PopularArticleAllTime from "./components/popular-article-all-time";
 
 export default function SidePopularArticle() {
   const [selected, setSelected] = React.useState("week");
+
   return (
     <Card className="border-none   w-full  md:max-w-2xl my-3 flex flex-col">
       <CardBody>
@@ -27,9 +31,7 @@ export default function SidePopularArticle() {
               </div>
             }
           >
-            <div className="max-w-full   dark:bg-gray-900/20 ">
-              <ArticleHorizontalSmallItem article={[]} />
-            </div>
+            <PopularArticleWeek isEnable={selected === "week"} />
           </Tab>
           <Tab
             key="month"
@@ -40,9 +42,7 @@ export default function SidePopularArticle() {
               </div>
             }
           >
-            <div className="max-w-[26rem] dark:bg-gray-900/20 ">
-              <ArticleHorizontalSmallItem article={[]} />
-            </div>
+            <PopularArticleMonth isEnable={selected === "month"} />
           </Tab>
           <Tab
             key="year"
@@ -54,7 +54,20 @@ export default function SidePopularArticle() {
             }
           >
             <div className="max-w-[26rem] flex flex-col dark:bg-gray-900/20 ">
-              <ArticleHorizontalSmallItem article={[]} />
+              <PopularArticleYear isEnable={selected === "year"} />
+            </div>
+          </Tab>
+          <Tab
+            key="all-time"
+            title={
+              <div className="flex items-center space-x-2 ">
+                <CalendarDays />
+                <span>All time </span>
+              </div>
+            }
+          >
+            <div className="max-w-[26rem] flex flex-col dark:bg-gray-900/20 ">
+              <PopularArticleAllTime isEnable={selected === "all-time"} />
             </div>
           </Tab>
         </Tabs>

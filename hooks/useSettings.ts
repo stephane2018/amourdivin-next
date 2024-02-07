@@ -1,5 +1,5 @@
 import { database } from "@/core/config/AppwriteConfig";
-import { GeneralSettingsModels } from "@/core/interfaces/general_settings";
+import { IGeneralSettingsModels } from "@/core/interfaces/general_settings";
 import { SettingsModels } from "@/core/interfaces/settings";
 import { useQuery } from "@tanstack/react-query";
 import { Models, Query } from "appwrite";
@@ -25,10 +25,10 @@ export function useGetSettings(value: number) {
 }
 
 export function useGetGeneraleSettings(value: number) {
-  return useQuery<Models.DocumentList<GeneralSettingsModels>, Error>({
+  return useQuery({
     queryKey: [`get/general_settings/${value}`],
     async queryFn() {
-      const result = await database.listDocuments<GeneralSettingsModels>(
+      const result = await database.listDocuments<IGeneralSettingsModels>(
         databasesId,
         CollectionGeneraleSettings,
         [Query.equal("id", value), Query.limit(1)]

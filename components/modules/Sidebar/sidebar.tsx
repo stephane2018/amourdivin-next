@@ -10,11 +10,10 @@ interface SidebarProps {}
 const Sidebar: FC<SidebarProps> = async () => {
   return (
     <div className="flex flex-col gap-3 md:mt-10">
-      <CategoriesListSidebar />
       <SidePopularArticle />
-      <DownloadSidebar />
-      <Newsletter />
       <Recommandation />
+      <CategoriesListSidebar />
+      <Newsletter />
     </div>
   );
 };
