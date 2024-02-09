@@ -18,7 +18,7 @@ export const siteConfig = {
     },
     {
       label: "Terme et conditions",
-      href: "/terms-condition",
+      href: "/terms-conditions",
     },
   ],
   navMenuItems: [

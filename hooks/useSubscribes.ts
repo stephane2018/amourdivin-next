@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { Models, Query } from "appwrite";
 import { AppWriteResponse } from "../core/types/AppWriteResponseInterface";
 import { ISubscribesModels } from "@/core/interfaces/Subscribes";
+import { IContactsModels } from "@/core/interfaces/Contacts";
 
 const pagination = 10;
 const databaseId = "amourdivin";
@@ -50,6 +51,20 @@ export function useSaveSubscribers() {
 //     },
 //   });
 // }
+
+export function useGetLastContactsItem() {
+  return useQuery({
+    queryKey: [`GetLastContactsItem`],
+    queryFn: async () => {
+      const result = await database.listDocuments<IContactsModels>(
+        databaseId,
+        "contacts",
+        [Query.limit(1), Query.orderDesc("created_at")]
+      );
+      return result;
+    },
+  });
+}
 
 export function useGetLastSubscriptionItem() {
   return useQuery({

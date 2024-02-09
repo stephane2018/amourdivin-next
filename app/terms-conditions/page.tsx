@@ -4,7 +4,11 @@ import { Card, Code } from "@nextui-org/react";
 import { Metadata, ResolvingMetadata } from "next";
 import { subtitle, title } from "@/components/primitives";
 import ContactForm from "@/components/modules/contacts/contactsForm";
-
+import { Pages } from "../../core/interfaces/Pages";
+import pagesService from "@/core/services/pages.service";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote/rsc";
+// getPagesBySlug
 export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
@@ -21,9 +25,9 @@ export async function generateMetadata(
       };
 
     return {
-      title: setting.documents[0].site_title,
-      description: setting.documents[0].site_description,
-      keywords: setting.documents[0].keywords,
+      title: "Amourdivin - a propos de nous ",
+      description: "Vous trouverez tous les details sur qui somme nous",
+      keywords: `${setting.documents[0].keywords}, a-propos-de-nous `,
 
       openGraph: {
         title: setting.documents[0].site_title,
@@ -48,8 +52,8 @@ export async function generateMetadata(
       },
       twitter: {
         card: "summary_large_image",
-        title: setting.documents[0].site_title,
-        description: setting.documents[0].site_description,
+        title: "Amourdivin - a propos de nous",
+        description: "Vous trouverez tous les details sur qui somme nous",
         siteId: "1467726470533754880",
         creator: "@nextjs",
         creatorId: "1467726470533754880",
@@ -64,41 +68,39 @@ export async function generateMetadata(
   }
 }
 
-export default function Page({}: { children: React.ReactNode }) {
+async function getPageDetails() {
+  const AproposDeNous = await pagesService.getPagesBySlug("terms-conditions");
+  return {
+    AproposDeNous: AproposDeNous.documents[0],
+  };
+}
+export default async function Page({}: { children: React.ReactNode }) {
+  const page = await getPageDetails();
+
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
-      <div className="gap-4 mx-auto container max-w-xl mt-4">
+      <div className="gap-4 mx-auto container max-w-5xl mt-4">
         <Card className=" h-full w-full">
           <div className="flex w-full flex-col p-4">
-            <h1
+            <h3
               className={title({
                 color: "green",
-                class: " text-left justify-left",
+                size: "sm",
+                class: " mx-auto text-left justify-center",
               })}
             >
-              Contacts &nbsp;
-            </h1>
+              Termes and condition &nbsp;
+            </h3>
             <br />
-            <h1
-              className={subtitle({
-                className: "!text-sm  text-left justify-left",
-              })}
-            >
-              Si vous avez un soucis ecrivez nous a travers ce formulaire ou
-              appelez un de ces numéros
-            </h1>
-            <div className="flex gap-3">
-              <Code className="bg-black/60  rounded-xl px-2">
-                +237694160832
-              </Code>
-              <Code className="bg-black/60  rounded-xl px-2">
-                +237677198908
-              </Code>
-              <Code className="bg-black/60 rounded-xl px-2">+237693960767</Code>
-            </div>
 
-            <div className="w-full">
-              <ContactForm />
+            <div className="w-full gap-5">
+              {page.AproposDeNous && (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: page.AproposDeNous.page_content,
+                  }}
+                />
+              )}
             </div>
           </div>
         </Card>
