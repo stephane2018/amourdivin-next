@@ -13,6 +13,10 @@ export const siteConfig = {
       href: "/contact",
     },
     {
+      label: "Categories",
+      href: "/categories",
+    },
+    {
       label: "A propos de nous",
       href: "/a-propos-de-nous",
     },
@@ -31,20 +35,16 @@ export const siteConfig = {
       href: "/contact",
     },
     {
+      label: "Categories",
+      href: "/categories",
+    },
+    {
       label: "A propos de nous",
       href: "/a-propos-de-nous",
     },
     {
       label: "Terme et conditions",
-      href: "/terms-condition",
-    },
-    {
-      label: "Settings",
-      href: "/settings",
-    },
-    {
-      label: "Help & Feedback",
-      href: "/help-feedback",
+      href: "/terms-conditions",
     },
     {
       label: "Logout",
