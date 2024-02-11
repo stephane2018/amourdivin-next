@@ -1,11 +1,23 @@
 import { Card, CardBody, Skeleton } from "@nextui-org/react";
 import React, { FC } from "react";
-
-const SkeletonArticle = () => {
+interface SkeletonArticleInterface {
+  isvertical: boolean;
+}
+const SkeletonArticle: FC<SkeletonArticleInterface> = ({
+  isvertical = false,
+}) => {
   return (
     <Card className="  hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl my-2">
-      <CardBody className="flex flex-row flex-grow gap-4 h-full ">
-        <Skeleton className="rounded-xl w-[50%] h-[11rem]  bg-default-300" />
+      <CardBody
+        className={`flex ${
+          isvertical === true ? "flex-col" : "flex-row flex-grow"
+        }  gap-4 h-full `}
+      >
+        <Skeleton
+          className={`rounded-xl ${
+            isvertical ? "w-full" : "w-[50%]"
+          } h-[11rem]  bg-default-300`}
+        />
         <div className="flex flex-col w-full gap-3">
           <div className="flex justify-between">
             <Skeleton className="rounded-xl w-10 h-3"></Skeleton>
@@ -40,12 +52,22 @@ const SkeletonArticle = () => {
 
 interface IArticleSkeletonList {
   item?: number;
+  isvertical?: boolean;
 }
-const ArticleSkeletonList: FC<IArticleSkeletonList> = ({ item = 5 }) => {
+const ArticleSkeletonList: FC<IArticleSkeletonList> = ({
+  item = 5,
+  isvertical = false,
+}) => {
   return (
-    <div className="grid grid-cols-1 gap-2">
+    <div
+      className={`${
+        !isvertical
+          ? "grid grid-cols-1 gap-2"
+          : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
+      } gap-4 pb-4`}
+    >
       {Array.from({ length: item }, (_, index) => index + 1).map((index) => (
-        <SkeletonArticle key={index} />
+        <SkeletonArticle isvertical={isvertical} key={index} />
       ))}
     </div>
   );

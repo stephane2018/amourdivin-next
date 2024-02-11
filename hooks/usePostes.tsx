@@ -57,7 +57,7 @@ export function useGetPopularPostWeek(enable = false) {
     queryKey: [`${prefix}/GetPopularArtucleInWeek`],
     queryFn: async () => {
       const result = await PostesServices.GetPostPageviewsWeek();
-      console.log(result);
+
       return result;
     },
     enabled: Boolean(enable),

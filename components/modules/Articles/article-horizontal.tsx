@@ -22,16 +22,30 @@ import ArticleComment from "../comments/article-comments";
 moment.locale("fr");
 interface IArticleH {
   article: IPostsModels | undefined;
+  isVertical?: boolean;
+  isInCategoriePage?: boolean;
 }
-const ArticleHorizontalItem: FC<IArticleH> = ({ article }) => {
+const ArticleHorizontalItem: FC<IArticleH> = ({
+  article,
+  isVertical = false,
+  isInCategoriePage = false,
+}) => {
   return (
     <Card className="  hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl my-3">
-      <CardBody className="grid grid-cols-5 gap-3 h-full ">
-        <div className="gap-2 col-span-2 w-full relative">
+      <CardBody
+        className={`grid ${
+          isVertical ? "grid-cols-1" : "grid-cols-5"
+        }  gap-3 h-full `}
+      >
+        <div
+          className={`gap-2 ${
+            isVertical ? "col-span-1" : "col-span-2 "
+          } w-full relative`}
+        >
           <Image
             alt="Card background"
-            width={220}
-            className="object-cover rounded-xl  h-[8rem] md:h-[10rem]"
+            width={isVertical ? 500 : 220}
+            className="object-cover rounded-xl   h-[8rem] md:h-[10rem]"
             src={disPlayImageForFrontUrl(article?.image_default || "")}
           />
           {article?.post_type && (
@@ -46,10 +60,17 @@ const ArticleHorizontalItem: FC<IArticleH> = ({ article }) => {
             </Button>
           )}
         </div>
-        <div className="col-span-3 flex-col w-full gap-3 mr-3">
+        <div
+          className={`${
+            isVertical ? "col-span-1" : "col-span-3"
+          } flex-col w-full gap-3 mr-3`}
+        >
           <div className="flex justify-between">
             {article?.category_id && (
-              <CategorieChip id={article?.category_id} />
+              <CategorieChip
+                id={article?.category_id}
+                isCategoriesPage={isInCategoriePage}
+              />
             )}
             <div className="item-center justify-center gap-3 ">
               <h4 className="text-[0.60rem] md:text-xs cursor-pointer font-semibold leading-none text-default-600">
@@ -58,7 +79,7 @@ const ArticleHorizontalItem: FC<IArticleH> = ({ article }) => {
               </h4>
             </div>
           </div>
-          <Link href="#" className="mb-4 w-full">
+          <Link href={`${article?.title_slug}`} className="mb-4 w-full">
             <p className="line-clamp-2 text-sm cursor-pointer font-bold text-black dark:text-white  ">
               {ClimpText(article?.title || "", 180)}
             </p>

@@ -17,7 +17,7 @@ class PosteService {
   constructor() {
     this.CollectionName = config.collectionNames.poste;
     this.databaseId = config.DatabaseUrl;
-    this.numberOfArticle = 5;
+    this.numberOfArticle = 10;
   }
 
   public async get() {
@@ -32,12 +32,10 @@ class PosteService {
         ]
       );
       if (!res) {
-        console.log(res);
         return null;
       }
       return res;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
@@ -100,7 +98,7 @@ class PosteService {
           Query.lessThanEqual("created_at", getCurrentWeek().fin.toString()),
         ]
       );
-      console.log(result);
+
       return Promise.resolve(result);
     } catch (error: any) {
       return Promise.reject(error);
@@ -171,6 +169,35 @@ class PosteService {
             Query.limit(this.numberOfArticle),
             Query.orderDesc("created_at"),
             Query.equal("visibility", 1),
+          ];
+      const result = await database.listDocuments<IPostsModels>(
+        this.databaseId,
+        this.CollectionName,
+        pagination
+      );
+      const lastId = result.documents[result.documents.length - 1].$id;
+      return Promise.resolve({ ...result, lastId });
+    } catch (error: any) {
+      return Promise.reject(error);
+    }
+  }
+
+  public async getInfiniteArticlesCategoriesList(
+    pageParam: string | null,
+    categories: string[]
+  ) {
+    try {
+      const pagination: string[] = pageParam
+        ? [
+            Query.limit(this.numberOfArticle),
+            Query.cursorAfter(pageParam),
+            Query.orderDesc("created_at"),
+            Query.equal("category_id", [...categories]),
+          ]
+        : [
+            Query.limit(this.numberOfArticle),
+            Query.orderDesc("created_at"),
+            Query.equal("category_id", [...categories]),
           ];
       const result = await database.listDocuments<IPostsModels>(
         this.databaseId,

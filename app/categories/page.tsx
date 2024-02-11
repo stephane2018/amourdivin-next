@@ -80,7 +80,7 @@ const CategoriesItem = ({ data }: { data: ICategories }) => {
       as={Link}
       href={`categories/${data.name_slug}`}
       isBlurred
-      className="h-20 dark:bg-black/70 hover:bg-primary-600/30  hover:text-primary-500 transition-colors duration-300 hover:cursor-pointer "
+      className="h-20 dark:bg-black/70 dark:hover:bg-primary-600/30 hover:bg-primary-600/30  hover:text-primary-500 transition-colors duration-300 hover:cursor-pointer "
     >
       <CardBody className=" items-center justify-center gap-4">
         <h4 className={`flex-wrap font-medium text-small `}>{data.name}</h4>
@@ -95,7 +95,7 @@ export default async function Page({}: { children: React.ReactNode }) {
       <div className="gap-4 mx-auto container max-w-5xl mt-4">
         <Card className=" h-full w-full ">
           <div className="flex w-full flex-col p-4">
-            <div className="flex f-">
+            <div className="flex ">
               <h3
                 className={title({
                   color: "green",

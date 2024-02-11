@@ -2,6 +2,7 @@ import { Query } from "appwrite";
 import { database } from "../config/AppwriteConfig";
 import config from "../config/constantes";
 import { ICategories } from "../interfaces/categories";
+import { IPostsModels } from "../interfaces/posts";
 
 const pagination = 100;
 
@@ -9,10 +10,12 @@ class CategorieService {
   private databaseId: string;
 
   private CollectionName: string;
+  private numberOfArticle: number;
 
   constructor() {
     this.CollectionName = config.collectionNames.categories;
     this.databaseId = config.DatabaseUrl;
+    this.numberOfArticle = 5;
   }
 
   public async get() {
@@ -30,6 +33,27 @@ class CategorieService {
       return Promise.reject(error);
     }
   }
+
+  /**
+   * get categories by id
+   * @returns
+   */
+  public async getCategorieById(id: string) {
+    try {
+      const result = await database.listDocuments<ICategories>(
+        this.databaseId,
+        this.CollectionName,
+        [Query.equal("id", id), Query.orderAsc("created_at")]
+      );
+      if (!result) {
+        return null;
+      }
+      return Promise.resolve(result.documents);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
   /**
    * Ges parents categories
    * @returns
@@ -55,6 +79,27 @@ class CategorieService {
   }
 
   /**
+   * Recuperationm des sous categories d'une sous categories
+   * @returns
+   */
+  public async getSubCategories(id: string) {
+    try {
+      const result = await database.listDocuments<ICategories>(
+        this.databaseId,
+        this.CollectionName,
+        [Query.equal("parent_id", id), Query.orderAsc("created_at")]
+      );
+      if (!result) {
+        return null;
+      }
+
+      return Promise.resolve(result.documents);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  /**
    * Recuperation  de la categories parents
    * @returns
    */
@@ -72,6 +117,7 @@ class CategorieService {
       if (!result) {
         return null;
       }
+
       return Promise.resolve(result.documents[0]);
     } catch (error) {
       return Promise.reject(error);

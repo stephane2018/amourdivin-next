@@ -13,6 +13,10 @@ import {
 } from "@nextui-org/react";
 import CategorieServices from "@/core/services/categories.service";
 import Link from "next/link";
+import { ChevronRight, Home } from "lucide-react";
+import { useRouter } from "next/router";
+import LoadMoreCategories from "@/components/modules/categories/categories-list";
+import { ICategories } from "@/core/interfaces/categories";
 
 type Props = {
   params: { slug: string };
@@ -74,57 +78,69 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   } catch (error) {
     return {
       title: "Page not found",
-      description: "The page you are trying to lod is not exist",
+      description: "The page you are trying to load is not exist",
     };
   }
 }
 
 async function getCategorie(slug: string) {
+  let subCategorie: ICategories[] | null = null;
   const categorie = await CategorieServices.getParentCategorieBySlug(slug);
+  if (categorie !== null) {
+    subCategorie = await CategorieServices.getSubCategories(
+      categorie?.id || ""
+    );
+  }
+
+  const subCategoriesIdList: string[] = [];
+  if (subCategorie)
+    subCategorie?.map((item) => subCategoriesIdList.push(item.id));
+
   return {
     categorie: categorie,
+    subCategoriesIdList: subCategoriesIdList || [],
   };
 }
 
-// const CategoriesItem = ({ data }: { data: ICategories }) => {
-//   return (
-//     <Card
-//       as={Link}
-//       href={`categories/${data.name_slug}`}
-//       isBlurred
-//       className="h-20 dark:bg-black/70 hover:bg-primary-600/30  hover:text-primary-500 transition-colors duration-300 hover:cursor-pointer "
-//     >
-//       <CardBody className=" items-center justify-center gap-4">
-//         <h4 className={`flex-wrap font-medium text-small `}>{data.name}</h4>
-//       </CardBody>
-//     </Card>
-//   );
-// };
-
 export default async function Page({ params }: { params: { slug: string } }) {
-  const categories = await getCategorie(params.slug || "");
-  console.log(categories);
+  const { categorie, subCategoriesIdList } = await getCategorie(
+    params.slug || ""
+  );
+
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
       <div className="gap-4 mx-auto container max-w-5xl mt-4">
         <div className=" h-full w-full flex-col flex  gap-4 ">
           <Card className="flex gap-4 p-3">
             <ul className=" flex gap-2 list-none">
-              <li className="hover:text-primary-500 transition-colors duration-300 hover:underline">
-                <Link href={"/"}>Acceuil</Link>
-              </li>
-              <li className="hover:text-primary-500 transition-colors duration-300 hover:underline">
-                <Link href={`/categories`}>Categories</Link>
-              </li>
-              <li className="hover:text-primary-500 transition-colors duration-300 hover:underline">
-                <Link href={`/categories/${categories.categorie?.name_slug}`}>
-                  {categories.categorie?.name}
+              <li className=" gap-3 flex items-center justify-center ">
+                <Link
+                  href={"/"}
+                  className="hover:text-primary-500 transition-colors duration-300 mx-auto"
+                >
+                  <Home size={15} />
                 </Link>
+                {<ChevronRight size={15} />}
+              </li>
+              <li className=" gap-4 flex items-center justify-center">
+                <Link
+                  href={`/categories`}
+                  className="hover:text-primary-500 transition-colors duration-300"
+                >
+                  {" "}
+                  Categories
+                </Link>
+                {<ChevronRight size={15} />}
+              </li>
+              <li className=" gap-4 flex items-center justify-center">
+                <span className="text-primary-500 transition-colors duration-300">
+                  {categorie?.name}
+                </span>
               </li>
             </ul>
           </Card>
-          <Card className="flex w-full flex-col p-4">
-            <div className="flex f-">
+          <Card className="flex w-full flex-col p-4 ">
+            <div className="flex ml-4">
               <h3
                 className={title({
                   color: "green",
@@ -132,7 +148,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
                   class: " text-left justify-left flex ",
                 })}
               >
-                {categories.categorie?.name}
+                {categorie?.name}
               </h3>
               <span className="bg-green-400 text-xs px-3 h-fit rounded-xl">
                 8 articles
@@ -140,14 +156,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
             </div>
             <h1
               className={subtitle({
-                className: "!text-sm  text-left justify-left",
+                className: "!text-sm  text-left justify-left ml-4",
               })}
             >
-              {categories.categorie?.description}
+              {categorie?.description}
             </h1>
-          </Card>
 
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4"></div>
+            <div className="w-full gap-4 p-4">
+              <LoadMoreCategories
+                slug={categorie?.name_slug}
+                subCategoriesIdList={subCategoriesIdList || []}
+              />
+            </div>
+          </Card>
         </div>
       </div>
     </section>

@@ -67,7 +67,9 @@ const LoadMoreArticles = () => {
             ))}
         </React.Fragment>
       ))}
-      {status === "pending" || (isFetchingNextPage && <ArticleSkeletonList />)}
+      {status === "pending" || isFetchingNextPage ? (
+        <ArticleSkeletonList />
+      ) : null}
 
       <Button
         onClick={() => fetchNextPage()}
