@@ -80,7 +80,7 @@ const CategoriesItem = ({ data }: { data: ICategories }) => {
       as={Link}
       href={`categories/${data.name_slug}`}
       isBlurred
-      className="h-20 dark:bg-black/70 dark:hover:bg-primary-600/30 hover:bg-primary-600/30  hover:text-primary-500 transition-colors duration-300 hover:cursor-pointer "
+      className="h-20 dark:bg-black/70 dark:hover:bg-primary-600/30 hover:bg-primary-600/30 hover:cursor-pointer "
     >
       <CardBody className=" items-center justify-center gap-4">
         <h4 className={`flex-wrap font-medium text-small `}>{data.name}</h4>
@@ -120,9 +120,15 @@ export default async function Page({}: { children: React.ReactNode }) {
           </div>
 
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
-            {categories.categories.map((categories, key) => (
-              <CategoriesItem data={categories} key={key} />
-            ))}
+            {categories.categories
+              .filter((categorie) => {
+                return (
+                  categorie.name !== "direct" && categorie.name !== "general"
+                );
+              })
+              .map((categories, key) => (
+                <CategoriesItem data={categories} key={key} />
+              ))}
           </div>
         </Card>
       </div>

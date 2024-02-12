@@ -64,7 +64,7 @@ const ArticleSkeletonList: FC<IArticleSkeletonList> = ({
         !isvertical
           ? "grid grid-cols-1 gap-2"
           : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3"
-      } gap-4 pb-4`}
+      } gap-4 my-1`}
     >
       {Array.from({ length: item }, (_, index) => index + 1).map((index) => (
         <SkeletonArticle isvertical={isvertical} key={index} />

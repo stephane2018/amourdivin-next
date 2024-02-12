@@ -74,6 +74,7 @@ const LoadMoreCategories: FC<ICategoriesList> = ({
               .map((article) => (
                 <ArticleHorizontalItem
                   isVertical
+                  isInCategoriePage={true}
                   key={article.$id}
                   article={article}
                 />

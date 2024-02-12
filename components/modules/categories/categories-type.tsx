@@ -43,7 +43,7 @@ export default function CategorieChip({
   }, []);
 
   useEffect(() => {
-    if (id) {
+    if (id && !isCategoriesPage) {
       getCategorie(id).then((item) => {
         setCategories(item[0]);
       });
@@ -65,7 +65,7 @@ export default function CategorieChip({
       }}
       className="px-2 py-1 w-fit gap-2 text-[0.60rem] md:text-xs text-white rounded-md "
     >
-      {categories?.name}
+      {categories?.name.toLocaleLowerCase()}
     </Link>
   );
 }
