@@ -4,6 +4,7 @@ import { Card, Code } from "@nextui-org/react";
 import { Metadata, ResolvingMetadata } from "next";
 import { subtitle, title } from "@/components/primitives";
 import ContactForm from "@/components/modules/contacts/contactsForm";
+import pagesService from "@/core/services/pages.service";
 
 export async function generateMetadata(
   parent: ResolvingMetadata
@@ -14,21 +15,23 @@ export async function generateMetadata(
     const img800 = storage.getFilePreview("logo", "logo-512", 800, 600);
     const img1800 = storage.getFilePreview("logo", "logo-512", 1800, 1600);
 
-    if (setting === null)
+    const page = await pagesService.getPagesBySlug("contacts");
+
+    if (setting === null || page === null)
       return {
         title: "Not Found",
         description: "The page you are looking for does not exist.",
       };
 
     return {
-      title: setting.documents[0].site_title,
-      description: setting.documents[0].site_description,
-      keywords: setting.documents[0].keywords,
+      title: `Amourdivin - ${page.documents[0].title} `,
+      description: `${page.documents[0].description}`,
+      keywords: `${page.documents[0].keywords}`,
 
       openGraph: {
-        title: setting.documents[0].site_title,
-        description: setting.documents[0].site_description,
-        url: "/",
+        title: page.documents[0].title,
+        description: page.documents[0].description,
+        url: `/${page.documents[0].slug}`,
         siteName: setting.documents[0].application_name,
         images: [
           {
@@ -40,7 +43,7 @@ export async function generateMetadata(
             url: img1800.href,
             width: 1800,
             height: 1600,
-            alt: "My custom alt",
+            alt: "amourdivin",
           },
         ],
         locale: "fr_US",
@@ -48,8 +51,8 @@ export async function generateMetadata(
       },
       twitter: {
         card: "summary_large_image",
-        title: setting.documents[0].site_title,
-        description: setting.documents[0].site_description,
+        title: `Amourdivin - ${page.documents[0].title} `,
+        description: `${page.documents[0].description}`,
         siteId: "1467726470533754880",
         creator: "@nextjs",
         creatorId: "1467726470533754880",

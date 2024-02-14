@@ -103,7 +103,7 @@ const Newsletter: FC<NewsletterProps> = () => {
   };
 
   return (
-    <Card className="border-none  shadow-small  w-full  md:max-w-2xl my-3 flex flex-col ">
+    <Card className="border-none  shadow-small h-fit  w-full  md:max-w-2xl my-3 flex flex-col ">
       <CardHeader>
         <CategoriesHeader title="Newsletter" hideIcon={false} />
       </CardHeader>

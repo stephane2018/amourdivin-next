@@ -48,6 +48,7 @@ const ArticleHorizontalItem: FC<IArticleH> = ({
             className="object-cover rounded-xl   h-[8rem] md:h-[10rem]"
             src={disPlayImageForFrontUrl(article?.image_default || "")}
           />
+
           {article?.post_type && (
             <Button
               isIconOnly
@@ -79,7 +80,7 @@ const ArticleHorizontalItem: FC<IArticleH> = ({
               </h4>
             </div>
           </div>
-          <Link href={`${article?.title_slug}`} className="mb-4 w-full">
+          <Link href={`/${article?.title_slug}`} className="mb-4 w-full">
             <p className="line-clamp-2 text-sm cursor-pointer font-bold text-black dark:text-white  ">
               {ClimpText(article?.title || "", 180)}
             </p>

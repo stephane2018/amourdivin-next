@@ -18,6 +18,8 @@ export async function generateMetadata(
     const img800 = storage.getFilePreview("logo", "logo-512", 800, 600);
     const img1800 = storage.getFilePreview("logo", "logo-512", 1800, 1600);
 
+    const page = await pagesService.getPagesBySlug("terms-conditions");
+
     if (setting === null)
       return {
         title: "Not Found",
@@ -25,14 +27,14 @@ export async function generateMetadata(
       };
 
     return {
-      title: "Amourdivin - a propos de nous ",
-      description: "Vous trouverez tous les details sur qui somme nous",
-      keywords: `${setting.documents[0].keywords}, a-propos-de-nous `,
+      title: `Amourdivin - ${page.documents[0].title} `,
+      description: `${page.documents[0].description}`,
+      keywords: `${page.documents[0].keywords}`,
 
       openGraph: {
-        title: setting.documents[0].site_title,
-        description: setting.documents[0].site_description,
-        url: "/",
+        title: page.documents[0].title,
+        description: page.documents[0].description,
+        url: `/${page.documents[0].slug}`,
         siteName: setting.documents[0].application_name,
         images: [
           {
@@ -44,7 +46,7 @@ export async function generateMetadata(
             url: img1800.href,
             width: 1800,
             height: 1600,
-            alt: "My custom alt",
+            alt: "amourdivin",
           },
         ],
         locale: "fr_US",
@@ -52,8 +54,8 @@ export async function generateMetadata(
       },
       twitter: {
         card: "summary_large_image",
-        title: "Amourdivin - a propos de nous",
-        description: "Vous trouverez tous les details sur qui somme nous",
+        title: `Amourdivin - ${page.documents[0].title} `,
+        description: `${page.documents[0].description}`,
         siteId: "1467726470533754880",
         creator: "@nextjs",
         creatorId: "1467726470533754880",

@@ -210,6 +210,28 @@ class PosteService {
       return Promise.reject(error);
     }
   }
+
+  /**
+   *  Recuperer un postes a partir du slug
+   * @returns
+   */
+  public async GetPosteBySlug(id: string | boolean) {
+    try {
+      const result = await database.listDocuments<IPostsModels>(
+        this.databaseId,
+        this.CollectionName,
+        [
+          Query.limit(1),
+          Query.orderDesc("created_at"),
+          Query.equal("title_slug", id),
+        ]
+      );
+
+      return Promise.resolve(result);
+    } catch (error: any) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 const PostesServices = new PosteService();

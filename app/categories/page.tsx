@@ -88,6 +88,7 @@ const CategoriesItem = ({ data }: { data: ICategories }) => {
     </Card>
   );
 };
+
 export default async function Page({}: { children: React.ReactNode }) {
   const categories = await getCateogies();
   return (

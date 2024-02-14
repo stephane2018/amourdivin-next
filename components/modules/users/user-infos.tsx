@@ -4,10 +4,16 @@ import { IUserModels } from "@/core/interfaces/user.interface";
 import userService from "@/core/services/user.service";
 import { disPlayImageUrl } from "@/core/utils/helpers.utils";
 import { useGetUserById } from "@/hooks/useUser";
-import { Avatar, Skeleton } from "@nextui-org/react";
-import React, { useCallback, useEffect, useState } from "react";
+import { Avatar, Skeleton, User } from "@nextui-org/react";
+import React, { useEffect, useState } from "react";
 
-export default function UserInfosChip({ id }: { id: string }) {
+export default function UserInfosChip({
+  id,
+  type = "SIMPLE",
+}: {
+  id: string;
+  type?: "SIMPLE" | "DETAILS";
+}) {
   const { data, isLoading } = useGetUserById(id);
   const [userInfos, setUserInfos] = useState<IUserModels | null>(null);
 
@@ -19,6 +25,16 @@ export default function UserInfosChip({ id }: { id: string }) {
 
   return isLoading ? (
     <Skeleton className="flex rounded-md w-6 h-6" />
+  ) : type === "DETAILS" ? (
+    <div className="flex gap-2 rounded-lg">
+      <User
+        name={userInfos?.username}
+        description={userInfos?.about_me}
+        avatarProps={{
+          src: disPlayImageUrl(userInfos?.avatar || ""),
+        }}
+      />
+    </div>
   ) : (
     <div className="flex gap-2 rounded-lg">
       <Avatar

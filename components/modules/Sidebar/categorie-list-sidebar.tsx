@@ -24,9 +24,10 @@ const CategorieItem = ({ categorieItem }: { categorieItem: ICategories }) => {
 
 const CategoriesListSidebar = () => {
   const { data, isLoading } = useGetCategoriesParent();
+
   return (
-    <Card className="border-none shadow-small w-full   md:max-w-2xl my-3">
-      <CardHeader className="flex flex-row flex-grow gap-4 h-full">
+    <Card className="border-none shadow-small w-full h-fit  md:max-w-2xl my-3">
+      <CardHeader className="flex  gap-4">
         <CategoriesHeader />
       </CardHeader>
       <CardBody className="flex flex-col flex-grow gap-2 h-full ">
