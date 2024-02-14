@@ -154,23 +154,23 @@ export default async function Details({
                     src={disPlayImageForFrontUrl(article?.image_default || "")}
                   />
                   <span className="mx-auto flex s">
-                    {article.image_description || ""}
+                    {article?.image_description || ""}
                   </span>
                 </div>
 
-                {article.post_type === EnumPosteType.VIDEOS ? (
-                  <Videos youtubeUrl={article.video_url} />
+                {article?.post_type === EnumPosteType.VIDEOS ? (
+                  <Videos youtubeUrl={article?.video_url} />
                 ) : (
                   ""
                 )}
 
-                {article.post_type === EnumPosteType.AUDIOS ? (
-                  <Audios postId={article.id} />
+                {article?.post_type === EnumPosteType.AUDIOS ? (
+                  <Audios postId={article?.id} />
                 ) : (
                   ""
                 )}
 
-                <MakDownContentText content={article.content} />
+                <MakDownContentText content={article?.content} />
               </div>
             </Card>
             <div className="grid md:col-span-4 ">
