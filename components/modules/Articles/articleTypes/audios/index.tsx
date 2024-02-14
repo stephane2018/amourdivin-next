@@ -10,7 +10,7 @@ import { ShuffleIcon } from "./components/ShuffleIcon";
 
 // async function getAudiosData() {}
 const Audios = ({ postid }: { postId: number }) => {
-  // const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(false);
 
   return (
     <Card
