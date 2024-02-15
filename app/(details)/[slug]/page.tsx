@@ -165,7 +165,7 @@ export default async function Details({
                 )}
 
                 {article?.post_type === EnumPosteType.AUDIOS ? (
-                  <Audios postId={article?.id} />
+                  <Audios article={article} />
                 ) : (
                   ""
                 )}

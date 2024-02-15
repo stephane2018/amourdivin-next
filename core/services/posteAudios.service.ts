@@ -1,9 +1,8 @@
 import { ID, Query } from "appwrite";
-import config from "../constantes";
-import { databases } from "../db";
-import { PosteAudiosModels } from "../Models/Models";
-import { PosteAudiosSubmit } from "../Models/PostAudios";
 import GeneriqueService from "./generique.service";
+import config from "../config/constantes";
+import { PosteAudiosModels, PosteAudiosSubmit } from "../interfaces/PostAudios";
+import { database } from "../config/AppwriteConfig";
 
 class PostesAudioServices {
   private databaseId: string;
@@ -39,7 +38,7 @@ class PostesAudioServices {
    */
   public async get(post_id: string) {
     try {
-      const promise = await databases.listDocuments<PosteAudiosModels>(
+      const promise = await database.listDocuments<PosteAudiosModels>(
         this.databaseId,
         this.CollectionName,
         [Query.equal("post_id", Number(post_id))]
@@ -57,7 +56,7 @@ class PostesAudioServices {
    */
   public async save(data: PosteAudiosSubmit) {
     try {
-      const promise = await databases.createDocument(
+      const promise = await database.createDocument(
         this.databaseId,
         this.CollectionName,
         ID.unique(),
@@ -76,7 +75,7 @@ class PostesAudioServices {
    */
   public async update(data: any) {
     try {
-      const promise = await databases.updateDocument(
+      const promise = await database.updateDocument(
         this.databaseId,
         this.CollectionName,
         data.id,
@@ -95,7 +94,7 @@ class PostesAudioServices {
    */
   public async delete(id: any) {
     try {
-      const promise = await databases.deleteDocument(
+      const promise = await database.deleteDocument(
         this.databaseId,
         this.CollectionName,
         id

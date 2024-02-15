@@ -1,6 +1,11 @@
 import { Server } from "../config/AppwriteConfig";
 import { TypeOfMedia } from "../enum";
 
+export const Percent = (trackProgress: number, duration: number) => {
+  const per = duration ? `${(trackProgress / duration) * 100}%` : "0%";
+  return per;
+};
+
 export const getUrl = (url: string) => {
   const base_url_img = "https://amourdivin.net/";
   let imgUrl = "";
@@ -33,6 +38,7 @@ export const disPlayImageForFrontUrl = (url: string, getImgId = false) => {
 
   return CleanUrl || "";
 };
+
 export const StorageUrlAudiosBuilder = (
   imageId: string,
   bucketId = "audios"
@@ -50,6 +56,11 @@ export const disPlayImageUrl = (url: string) => {
     : getUrl(url);
 };
 
+export const disPlayAudiosUrl = (url: string) => {
+  return !url?.includes("uploads/")
+    ? StorageUrlBuilder(url, "audios")
+    : getUrl(url);
+};
 /**
  *  afficher le type d'icones en function des types d'articles
  * @param types

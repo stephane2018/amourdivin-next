@@ -9,6 +9,13 @@ import Footer from "@/components/footer";
 import { Toaster } from "sonner";
 import { SettingsProvider } from "@/core/context/SettingsProvider";
 
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_WEB_SITE_URL}`),
   alternates: {
@@ -40,7 +47,7 @@ export default function RootLayout({
   featured: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning className={roboto.className}>
       <head />
       <body
         className={clsx(

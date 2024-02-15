@@ -1,16 +1,79 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
-import { HeartIcon } from "./components/HeartIcon";
-import { PauseCircleIcon } from "./components/PauseIcon";
-import { NextIcon } from "./components/NextIcon";
-import { PreviousIcon } from "./components/PreviousIcon";
-import { RepeatOneIcon } from "./components/RepeatOneIcon";
-import { ShuffleIcon } from "./components/ShuffleIcon";
+import { HeartIcon } from "./components/icones/HeartIcon";
+import { IPostsModels } from "@/core/interfaces/posts";
+import { GetAudioPlayList } from "@/hooks/useAudio";
+import Control from "./components/control/control";
+import useAudioPlayer from "@/hooks/commom/audioPlayer/hooks";
+import ProgressBar from "./components/control/slider";
+import { disPlayImageForFrontUrl } from "@/core/utils/helpers.utils";
+import { TrackMetadata } from "@/hooks/commom/audioPlayer/types";
+
+function formatTime(timeInSeconds: number | null): string {
+  if (timeInSeconds === null) return "";
+  const numberOfMinutes = Math.floor(timeInSeconds / 60);
+  const numberOfSeconds = Math.floor(timeInSeconds - numberOfMinutes * 60);
+  const minutes = `${numberOfMinutes}`.padStart(2, "0");
+  const seconds = `${numberOfSeconds}`.padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
 
 // async function getAudiosData() {}
-const Audios = ({ postid }: { postId: number }) => {
+const Audios = ({ article }: { article: IPostsModels }) => {
   const [liked, setLiked] = useState(false);
+  const { AudioPlayList, isLoading, error } = GetAudioPlayList(
+    article.id.toString()
+  );
+  console.log(AudioPlayList);
+  const metadataForAudio: TrackMetadata[] = [];
+  (AudioPlayList || []).map((item) =>
+    metadataForAudio.push({
+      audioSrc: item.audio_path,
+      name: item.audio_name,
+    })
+  );
+  const {
+    playNextTrack,
+    playPreviousTrack,
+    playerState,
+    togglePlayPause,
+    toggleRepeat,
+    toggleShuffle,
+    setPlaybackPosition,
+  } = useAudioPlayer({
+    coverArtSrc: disPlayImageForFrontUrl(article?.image_default || ""),
+    playlist: metadataForAudio,
+  });
+
+  const {
+    repeat,
+    playbackState,
+    shuffle,
+    currentTrackDuration,
+    currentTrackPlaybackPosition,
+    currentTrackMetadata,
+  } = playerState;
+
+  function setProgress(value: number) {
+    if (currentTrackDuration !== null) {
+      setPlaybackPosition((value / 100) * currentTrackDuration);
+    }
+  }
+
+  function computeProgress(): number {
+    const noProgress =
+      currentTrackDuration === null ||
+      currentTrackPlaybackPosition === null ||
+      currentTrackDuration === 0;
+    if (noProgress) {
+      return 0;
+    } else {
+      return (currentTrackPlaybackPosition / currentTrackDuration) * 100;
+    }
+  }
+
+  useEffect(() => {}, [playerState]);
 
   return (
     <Card
@@ -53,64 +116,24 @@ const Audios = ({ postid }: { postId: number }) => {
             </div>
 
             <div className="flex flex-col mt-3 gap-1">
-              <Slider
-                aria-label="Music progress"
-                classNames={{
-                  track: "bg-default-500/30",
-                  thumb: "w-2 h-2 after:w-2 after:h-2 after:bg-foreground",
-                }}
-                color="foreground"
-                defaultValue={33}
-                size="sm"
+              <ProgressBar
+                rightLabel={formatTime(currentTrackDuration)}
+                leftLabel={formatTime(currentTrackPlaybackPosition)}
+                onChange={setProgress}
+                progress={computeProgress()}
               />
-              <div className="flex justify-between">
-                <p className="text-small">1:23</p>
-                <p className="text-small text-foreground/50">4:32</p>
-              </div>
             </div>
 
-            <div className="flex w-full items-center justify-center">
-              <Button
-                isIconOnly
-                className="data-[hover]:bg-foreground/10"
-                radius="full"
-                variant="light"
-              >
-                <RepeatOneIcon className="text-foreground/80" />
-              </Button>
-              <Button
-                isIconOnly
-                className="data-[hover]:bg-foreground/10"
-                radius="full"
-                variant="light"
-              >
-                <PreviousIcon />
-              </Button>
-              <Button
-                isIconOnly
-                className="w-auto h-auto data-[hover]:bg-foreground/10"
-                radius="full"
-                variant="light"
-              >
-                <PauseCircleIcon size={54} />
-              </Button>
-              <Button
-                isIconOnly
-                className="data-[hover]:bg-foreground/10"
-                radius="full"
-                variant="light"
-              >
-                <NextIcon />
-              </Button>
-              <Button
-                isIconOnly
-                className="data-[hover]:bg-foreground/10"
-                radius="full"
-                variant="light"
-              >
-                <ShuffleIcon className="text-foreground/80" />
-              </Button>
-            </div>
+            <Control
+              shuffle={shuffle}
+              repeat={repeat}
+              onShuffleClick={toggleShuffle}
+              onRepeatClick={toggleRepeat}
+              onPrevClick={playPreviousTrack}
+              onNextClick={playNextTrack}
+              onPlayClick={togglePlayPause}
+              isPlaying={playbackState === "PLAYING"}
+            />
           </div>
         </div>
       </CardBody>

@@ -4,17 +4,19 @@ interface ShuffleIconProps {
   width?: number; // Explicit width (overrides size)
   height?: number; // Explicit height (overrides size)
   className?: string;
+  fill?: string;
 }
 export const ShuffleIcon: React.FC<ShuffleIconProps> = ({
   size = 24,
   width,
   height,
+  fill = "none",
   className,
   ...props
 }) => (
   <svg
     aria-hidden="true"
-    fill="none"
+    fill={fill}
     focusable="false"
     height={size || height}
     role="presentation"
