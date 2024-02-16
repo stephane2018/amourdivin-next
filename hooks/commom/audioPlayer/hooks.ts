@@ -13,7 +13,6 @@ function useAudioPlayer(playlist: Playlist): AudioPlayer {
 
   useEffect(() => {
     const newPlayer = createAudioplayer(playlist, setPlayerState);
-    console.log(newPlayer);
     playerRef.current = newPlayer;
     return () => {
       newPlayer.cleanup();

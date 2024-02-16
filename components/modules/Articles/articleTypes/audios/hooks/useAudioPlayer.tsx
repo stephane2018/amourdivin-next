@@ -13,6 +13,7 @@ interface HTMLAudioState extends AudioProps {
 }
 
 const useAudioPlayer = ({ src, autoPlaySong = false }: AudioProps) => {
+  console.log(src);
   // The Audio element lives in state
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [autoPlay, setautoPlay] = useState<boolean>(autoPlaySong);

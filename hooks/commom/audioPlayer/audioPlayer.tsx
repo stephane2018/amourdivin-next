@@ -91,7 +91,7 @@ export function createAudioplayer(
   }
 
   function loadTrack(index: number) {
-    audioElement.src = playlist.coverArtSrc;
+    audioElement.src = playlist.playlist[index]?.audioSrc;
     audioElement.load();
     currentTrackIndex = index;
   }

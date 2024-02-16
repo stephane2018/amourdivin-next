@@ -1,14 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
 import { HeartIcon } from "./components/icones/HeartIcon";
 import { IPostsModels } from "@/core/interfaces/posts";
 import { GetAudioPlayList } from "@/hooks/useAudio";
 import Control from "./components/control/control";
-import useAudioPlayer from "@/hooks/commom/audioPlayer/hooks";
 import ProgressBar from "./components/control/slider";
-import { disPlayImageForFrontUrl } from "@/core/utils/helpers.utils";
+import { Percent, disPlayImageForFrontUrl } from "@/core/utils/helpers.utils";
 import { TrackMetadata } from "@/hooks/commom/audioPlayer/types";
+import useAudioPlayer from "./hooks/useAudioPlayer";
 
 function formatTime(timeInSeconds: number | null): string {
   if (timeInSeconds === null) return "";
@@ -25,55 +25,199 @@ const Audios = ({ article }: { article: IPostsModels }) => {
   const { AudioPlayList, isLoading, error } = GetAudioPlayList(
     article.id.toString()
   );
-  console.log(AudioPlayList);
-  const metadataForAudio: TrackMetadata[] = [];
-  (AudioPlayList || []).map((item) =>
-    metadataForAudio.push({
-      audioSrc: item.audio_path,
-      name: item.audio_name,
-    })
-  );
-  const {
-    playNextTrack,
-    playPreviousTrack,
-    playerState,
-    togglePlayPause,
-    toggleRepeat,
-    toggleShuffle,
-    setPlaybackPosition,
-  } = useAudioPlayer({
-    coverArtSrc: disPlayImageForFrontUrl(article?.image_default || ""),
-    playlist: metadataForAudio,
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [songIndex, setSongIndex] = useState<number>(0);
+  const [replay, setreplay] = useState<boolean>(true);
+  const [isRandom, setIsRandom] = useState(false);
+  const { audio, state, controls, setPlayer } = useAudioPlayer({
+    src: AudioPlayList[songIndex]?.audio_path,
+    autoPlaySong: true,
   });
+  const currentPercentage = Percent(state.currentTime, state.duration);
 
-  const {
-    repeat,
-    playbackState,
-    shuffle,
-    currentTrackDuration,
-    currentTrackPlaybackPosition,
-    currentTrackMetadata,
-  } = playerState;
-
-  function setProgress(value: number) {
-    if (currentTrackDuration !== null) {
-      setPlaybackPosition((value / 100) * currentTrackDuration);
-    }
-  }
-
-  function computeProgress(): number {
-    const noProgress =
-      currentTrackDuration === null ||
-      currentTrackPlaybackPosition === null ||
-      currentTrackDuration === 0;
-    if (noProgress) {
-      return 0;
+  const [buttonState, setButtonState] = useState<boolean>(false);
+  const skipRandom = (idx: number) => {
+    const randIdx = Math.floor(Math.random() * AudioPlayList.length);
+    if (randIdx === idx) {
+      skipRandom(idx);
     } else {
-      return (currentTrackPlaybackPosition / currentTrackDuration) * 100;
+      setSongIndex(randIdx);
+      setPlayer({
+        src: AudioPlayList[randIdx]?.audio_path,
+        autoPlaySong: true,
+      });
+    }
+  };
+
+  /** *
+   * Gestion des telechargerment
+   * ************ fin *****************
+   * ************************************
+   */
+
+  /** *
+   * Gestion du lesteur audio
+   * ************ Debut *****************
+   * ************************************
+   */
+
+  // Faire jouer l'audio currnet
+  const play = useCallback(() => {
+    if (audio?.currentSrc === "") {
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+      audio?.load();
+      controls.play();
+    } else {
+      audio?.play();
+      controls.play();
+    }
+  }, [audio, controls, songIndex, setPlayer, AudioPlayList]);
+
+  function pause() {
+    controls.pause();
+    audio?.pause();
+  }
+
+  function togglePlayPause() {
+    if (audio?.paused) {
+      audio?.play();
+      setIsPlaying(true);
+    } else {
+      audio?.pause();
+      setIsPlaying(false);
+    }
+  }
+  function activeRandom() {
+    if (localStorage.getItem("isRandom") !== null) {
+      setIsRandom(!isRandom);
+      localStorage.setItem("isRandom", JSON.stringify("0"));
+      // toast.success("mode aleatoire activé", {
+      //   position: "bottom-right",
+      // });
+    } else {
+      setIsRandom(!isRandom);
+      localStorage.setItem("isRandom", JSON.stringify("1"));
+      // toast.success("mode aleatoire activé", {
+      //   position: "bottom-right",
+      // });
+    }
+  }
+  function replayAudio() {
+    if (localStorage.getItem("replay") !== null) {
+      setreplay(!replay);
+      localStorage.setItem("replay", JSON.stringify("1"));
+      // toast.success("lecture en boubles active", {
+      //   position: "bottom-right",
+      // });
+    } else {
+      setreplay(!replay);
+      localStorage.setItem("replay", JSON.stringify("1"));
+      // toast.success("lecture en boubles active", {
+      //   position: "bottom-right",
+      // });
     }
   }
 
-  useEffect(() => {}, [playerState]);
+  const nextTrack = () => {
+    if (isRandom) return skipRandom(songIndex);
+    if (songIndex === AudioPlayList.length - 1) {
+      setSongIndex(0);
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+    } else {
+      setSongIndex(songIndex + 1);
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+    }
+    play();
+    return 0;
+  };
+  const PrevTrack = () => {
+    if (songIndex === 0) {
+      setSongIndex(AudioPlayList.length - 1);
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+    } else {
+      setSongIndex(songIndex - 1);
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+    }
+  };
+
+  const onScrub = (value: any) => {
+    // Clear any timers already running
+    controls.seek(value);
+    controls.play();
+  };
+
+  const onScrubEnd = () => {
+    // If not already playing, start
+    controls.play();
+  };
+  const checkIsRandom = useCallback(() => {
+    if (localStorage.getItem("isRandom") !== null) {
+      // console.log(0);
+      setIsRandom(true);
+    } else {
+      setIsRandom(false);
+    }
+  }, []);
+
+  const AudioListener = useCallback(() => {
+    if (audio?.currentSrc === "") {
+      setSongIndex(0);
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+      audio?.load();
+    }
+    audio?.addEventListener("play", play);
+    audio?.addEventListener("ended", function () {
+      if (replay === true) {
+        setPlayer({
+          src: AudioPlayList[songIndex]?.audio_path,
+          autoPlaySong: true,
+        });
+        controls.play();
+      } else {
+        setSongIndex(songIndex + 1);
+        setPlayer({
+          src: AudioPlayList[songIndex]?.audio_path,
+          autoPlaySong: true,
+        });
+        controls.play();
+      }
+    });
+  }, [audio, controls, replay, play, setPlayer, songIndex, AudioPlayList]);
+
+  const auToPlayMusic = useCallback(() => {
+    if (audio?.currentSrc === "") {
+      setPlayer({
+        src: AudioPlayList[songIndex]?.audio_path,
+        autoPlaySong: true,
+      });
+      audio?.load();
+      controls.play();
+    }
+  }, [audio, controls, AudioPlayList, setPlayer, setSongIndex, songIndex]);
+
+  useEffect(() => {
+    auToPlayMusic();
+
+    return () => {};
+  }, [AudioPlayList, checkIsRandom, AudioListener, auToPlayMusic]);
 
   return (
     <Card
@@ -117,22 +261,22 @@ const Audios = ({ article }: { article: IPostsModels }) => {
 
             <div className="flex flex-col mt-3 gap-1">
               <ProgressBar
-                rightLabel={formatTime(currentTrackDuration)}
-                leftLabel={formatTime(currentTrackPlaybackPosition)}
-                onChange={setProgress}
-                progress={computeProgress()}
+                rightLabel={formatTime(state.duration)}
+                leftLabel={formatTime(state.currentTime)}
+                onChange={onScrub}
+                progress={Number(currentPercentage)}
               />
             </div>
 
             <Control
-              shuffle={shuffle}
-              repeat={repeat}
-              onShuffleClick={toggleShuffle}
-              onRepeatClick={toggleRepeat}
-              onPrevClick={playPreviousTrack}
-              onNextClick={playNextTrack}
+              shuffle={isRandom}
+              repeat={replay}
+              onShuffleClick={activeRandom}
+              onRepeatClick={replayAudio}
+              onPrevClick={PrevTrack}
+              onNextClick={nextTrack}
               onPlayClick={togglePlayPause}
-              isPlaying={playbackState === "PLAYING"}
+              isPlaying={isPlaying}
             />
           </div>
         </div>
