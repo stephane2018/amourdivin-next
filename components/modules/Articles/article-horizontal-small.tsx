@@ -23,15 +23,17 @@ const ArticleHorizontalSmallItem: FC<IArticleH> = ({ article }) => {
   return (
     <Card className="border-0 shadow-none text-sm h-fit max-w-3xl my-1">
       <CardBody className="grid grid-cols-3 gap-2 w-full">
-        <Image
-          alt="Card background"
-          isZoomed
-          width={100}
-          className="object-cover rounded-xl h-[5rem] md:h-[6rem]"
-          src={disPlayImageForFrontUrl(article?.image_default || "")}
-        />
+        <Link href={`/${article?.title_slug}`}>
+          <Image
+            alt="Card background"
+            isZoomed
+            width={100}
+            className="object-cover rounded-xl h-[5rem] md:h-[6rem]"
+            src={disPlayImageForFrontUrl(article?.image_default || "")}
+          />
+        </Link>
         <div className="flex flex-col gap-1 col-span-2 w-full ">
-          <Link href="#">
+          <Link href={`/${article?.title_slug}`}>
             <p className="line-clamp-2 cursor-pointer  text-sm font-bold text-black dark:text-white  ">
               {ClimpText(article?.title || "", 100)}
             </p>

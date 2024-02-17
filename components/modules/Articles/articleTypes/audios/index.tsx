@@ -1,14 +1,30 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, CardBody, Image, Button, Slider } from "@nextui-org/react";
+import {
+  Card,
+  CardBody,
+  Image,
+  Button,
+  Slider,
+  CardFooter,
+  Divider,
+  CircularProgress,
+} from "@nextui-org/react";
 import { HeartIcon } from "./components/icones/HeartIcon";
 import { IPostsModels } from "@/core/interfaces/posts";
 import { GetAudioPlayList } from "@/hooks/useAudio";
 import Control from "./components/control/control";
 import ProgressBar from "./components/control/slider";
-import { Percent, disPlayImageForFrontUrl } from "@/core/utils/helpers.utils";
+import {
+  Percent,
+  disPlayImageForFrontUrl,
+  formatDate,
+} from "@/core/utils/helpers.utils";
 import { TrackMetadata } from "@/hooks/commom/audioPlayer/types";
 import useAudioPlayer from "./hooks/useAudioPlayer";
+import { CameraIcon, HardDriveDownload } from "lucide-react";
+import classNames from "classnames";
+import downloadFile, { handleDownloadFile } from "@/core/utils/doanloadFile";
 
 function formatTime(timeInSeconds: number | null): string {
   if (timeInSeconds === null) return "";
@@ -22,6 +38,8 @@ function formatTime(timeInSeconds: number | null): string {
 // async function getAudiosData() {}
 const Audios = ({ article }: { article: IPostsModels }) => {
   const [liked, setLiked] = useState(false);
+  const [showPlaylist, setShowPlayList] = useState(false);
+  const [currentFileDownload, setCurrentFileDownload] = useState("");
   const { AudioPlayList, isLoading, error } = GetAudioPlayList(
     article.id.toString()
   );
@@ -230,8 +248,8 @@ const Audios = ({ article }: { article: IPostsModels }) => {
           <div className="relative col-span-6 md:col-span-4">
             <Image
               alt="Album cover"
-              className="object-cover"
-              height={150}
+              className="object-cover !h-[200px]"
+              height={50}
               shadow="md"
               src={`${disPlayImageForFrontUrl(article?.image_default || "")}`}
               width="100%"
@@ -241,9 +259,15 @@ const Audios = ({ article }: { article: IPostsModels }) => {
           <div className="flex flex-col col-span-6 md:col-span-8">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-0">
-                <h3 className="font-semibold text-foreground/90">Daily Mix</h3>
-                <p className="text-small text-foreground/80">12 Tracks</p>
-                <h1 className="text-large font-medium mt-2">Frontend Radio</h1>
+                <h3 className="font-semibold text-foreground/90">
+                  {AudioPlayList[songIndex]?.audio_name}
+                </h3>
+                <p className="text-small text-foreground/80">
+                  {songIndex + 1}/{AudioPlayList.length} audios
+                </p>
+                <h1 className="text-large font-medium mt-2">
+                  {formatDate(AudioPlayList[songIndex]?.$createdAt.toString())}
+                </h1>
               </div>
               <Button
                 isIconOnly
@@ -281,6 +305,65 @@ const Audios = ({ article }: { article: IPostsModels }) => {
           </div>
         </div>
       </CardBody>
+      <Divider className="my-4" />
+      <CardFooter className="flex flex-col">
+        <div
+          className={` ${
+            showPlaylist ? "h-fit" : "h-0"
+          } w-full overflow-x-auto transition-transform duration-300`}
+        >
+          <ol className="list-decimal w-full   gap-4">
+            {AudioPlayList.map((item, key) => (
+              <li
+                key={item.$id}
+                className={`
+                ${
+                  AudioPlayList[songIndex].$id === item.$id
+                    ? "bg-green-500/70  "
+                    : "dark:bg-black/60"
+                }
+                flex  items-center w-full  p-2  my-2 rounded-xl justify-between
+              `}
+              >
+                <span className="cursor-pointer hover:underline hover:text-primary-500 transition-colors duration-300">
+                  {item.audio_name}
+                </span>
+                <Button
+                  isIconOnly
+                  color="warning"
+                  variant="faded"
+                  aria-label="Take a photo"
+                  onClick={() => {
+                    setCurrentFileDownload(item.$id);
+                    handleDownloadFile({
+                      url: item.audio_path,
+                      fileName: item.audio_name,
+                    })
+                      .then(() => setCurrentFileDownload(""))
+                      .catch(() => setCurrentFileDownload(""));
+                  }}
+                >
+                  {currentFileDownload == item.$id ? (
+                    <CircularProgress size="sm" color="success" />
+                  ) : (
+                    <HardDriveDownload />
+                  )}
+                </Button>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <Button
+          color="success"
+          className="w-full mt-3 items-center"
+          variant="flat"
+          onClick={() => setShowPlayList(!showPlaylist)}
+        >
+          {showPlaylist
+            ? "fermer la playlist "
+            : `afficher tous les audios (${AudioPlayList.length || ""})`}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };

@@ -61,6 +61,11 @@ export const disPlayAudiosUrl = (url: string) => {
     ? StorageUrlBuilder(url, "audios")
     : getUrl(url);
 };
+export const disPlayFileUrl = (url: string) => {
+  return !url?.includes("uploads/")
+    ? StorageUrlBuilder(url, "pdf")
+    : getUrl(url);
+};
 /**
  *  afficher le type d'icones en function des types d'articles
  * @param types
@@ -95,6 +100,15 @@ export function ClimpText(itemText: string, maxLengthOfLink = 120) {
   });
   // you can read more about the reduce function on mozilla.org
 }
+
+export const formatDate = (dateString: string) => {
+  const date = new Date(dateString).toLocaleDateString("fr", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+  return date;
+};
 
 export function formatDateTime(date: string) {
   const d = new Date(date);

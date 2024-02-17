@@ -16,6 +16,7 @@ import Videos from "@/components/modules/Articles/articleTypes/videos";
 import { EnumPosteType } from "@/core/enum";
 import Audios from "@/components/modules/Articles/articleTypes/audios";
 import Newsletter from "@/components/modules/Sidebar/newsletter-sidebar";
+import FileList from "@/components/modules/Articles/articleTypes/pdf";
 
 type Props = {
   params: { slug: string };
@@ -158,11 +159,10 @@ export default async function Details({
                   </span>
                 </div>
 
-                {article?.post_type === EnumPosteType.VIDEOS ? (
-                  <Videos youtubeUrl={article?.video_url} />
-                ) : (
-                  ""
-                )}
+                <Videos
+                  type={article?.post_type}
+                  youtubeUrl={article?.video_url}
+                />
 
                 {article?.post_type === EnumPosteType.AUDIOS ? (
                   <Audios article={article} />
@@ -171,6 +171,13 @@ export default async function Details({
                 )}
 
                 <MakDownContentText content={article?.content} />
+
+                {article?.post_type === EnumPosteType.AUDIOS ||
+                article?.post_type === EnumPosteType.ARTICLES ? (
+                  <FileList article={article} />
+                ) : (
+                  ""
+                )}
               </div>
             </Card>
             <div className="grid md:col-span-4 ">

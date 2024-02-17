@@ -42,12 +42,14 @@ const ArticleHorizontalItem: FC<IArticleH> = ({
             isVertical ? "col-span-1" : "col-span-2 "
           } w-full relative`}
         >
-          <Image
-            alt="Card background"
-            width={isVertical ? 500 : 220}
-            className="object-cover rounded-xl   h-[8rem] md:h-[10rem]"
-            src={disPlayImageForFrontUrl(article?.image_default || "")}
-          />
+          <Link href={`/${article?.title_slug}`}>
+            <Image
+              alt="Card background"
+              width={isVertical ? 500 : 250}
+              className="object-cover rounded-xl   h-[8rem] md:h-[10rem]"
+              src={disPlayImageForFrontUrl(article?.image_default || "")}
+            />
+          </Link>
 
           {article?.post_type && (
             <Button

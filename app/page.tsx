@@ -71,7 +71,7 @@ export default function Page({}: { children: React.ReactNode }) {
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
       <Featured />
-      <ArticleByThemes />
+      {/* <ArticleByThemes /> */}
       <div className="gap-4 mx-auto container grid grid-cols-1 md:grid-cols-12 w-full mt-4">
         <div className="col-span-7 w-full">
           <div className="col-span-12">

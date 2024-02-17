@@ -47,6 +47,20 @@ const getObj = async (audiosPostList: string[] | number[]) => {
     });
 };
 
+export function usePostFile(postId: number) {
+  // console.log(postId);
+  return useQuery({
+    queryKey: [`get/posts_files/${postId}`],
+    queryFn: async () => {
+      const result = await database.listDocuments<IPostsModels>(
+        config.DatabaseUrl,
+        config.collectionNames.posts_files,
+        [Query.equal("post_id", Number(postId))]
+      );
+      return result;
+    },
+  });
+}
 /**
  *
  * @param enable Recuperer  les articles de la semaines

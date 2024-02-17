@@ -150,9 +150,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
               >
                 {categorie?.name}
               </h3>
-              <span className="bg-green-400 text-xs px-3 h-fit rounded-xl">
-                8 articles
-              </span>
             </div>
             <h1
               className={subtitle({

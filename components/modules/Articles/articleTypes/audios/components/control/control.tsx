@@ -3,7 +3,7 @@ import { Button } from "@nextui-org/button";
 import { RepeatOneIcon } from "../icones/RepeatOneIcon";
 import { PreviousIcon } from "../icones/PreviousIcon";
 import { NextIcon } from "../icones/NextIcon";
-import { PauseCircleIcon, PlayIcon } from "lucide-react";
+import { PauseCircleIcon, PlayCircleIcon, PlayIcon } from "lucide-react";
 import { ShuffleIcon } from "../icones/ShuffleIcon";
 
 type ControlsProps = {
@@ -54,7 +54,11 @@ const Control = ({
         variant="light"
         onClick={onPlayClick}
       >
-        {isPlaying ? <PauseCircleIcon size={45} /> : <PlayIcon size={45} />}
+        {isPlaying ? (
+          <PauseCircleIcon size={54} />
+        ) : (
+          <PlayCircleIcon size={54} />
+        )}
       </Button>
       <Button
         isIconOnly
