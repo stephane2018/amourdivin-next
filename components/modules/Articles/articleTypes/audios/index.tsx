@@ -231,9 +231,9 @@ const Audios = ({ article }: { article: IPostsModels }) => {
             <Image
               alt="Album cover"
               className="object-cover"
-              height={200}
+              height={150}
               shadow="md"
-              src="/images/album-cover.png"
+              src={`${disPlayImageForFrontUrl(article?.image_default || "")}`}
               width="100%"
             />
           </div>

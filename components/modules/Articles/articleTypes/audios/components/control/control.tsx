@@ -54,7 +54,7 @@ const Control = ({
         variant="light"
         onClick={onPlayClick}
       >
-        {isPlaying ? <PauseCircleIcon size={54} /> : <PlayIcon size={54} />}
+        {isPlaying ? <PauseCircleIcon size={45} /> : <PlayIcon size={45} />}
       </Button>
       <Button
         isIconOnly
