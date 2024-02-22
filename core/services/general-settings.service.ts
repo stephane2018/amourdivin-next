@@ -1,7 +1,7 @@
 import { Query } from "appwrite";
 import { database } from "../config/AppwriteConfig";
 import config from "../config/constantes";
-import { GeneralSettingsModels } from "../interfaces/general_settings";
+import { IGeneralSettingsModels } from "../interfaces/general_settings";
 
 class GeneraleSettingService {
   private databaseId: string;
@@ -15,7 +15,7 @@ class GeneraleSettingService {
 
   public async getSettings(value: number) {
     try {
-      const settings = await database.listDocuments<GeneralSettingsModels>(
+      const settings = await database.listDocuments<IGeneralSettingsModels>(
         this.databaseId,
         this.CollectionName,
         [Query.equal("id", value), Query.limit(1)]

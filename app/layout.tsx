@@ -10,6 +10,10 @@ import { Toaster } from "sonner";
 import { SettingsProvider } from "@/core/context/SettingsProvider";
 
 import { Roboto } from "next/font/google";
+import settingsService from "@/core/services/settings.service";
+import GeneralSettingsService from "@/core/services/general-settings.service";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { general_settings } from "../core/interfaces/general_settings";
 
 const roboto = Roboto({
   weight: "400",
@@ -39,13 +43,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+async function getDetails() {
+  const setting = await GeneralSettingsService.getSettings(1);
+
+  return {
+    googleAnalytics: setting?.documents[0],
+  };
+}
+export default async function RootLayout({
   children,
   featured,
 }: {
   children: React.ReactNode;
   featured: React.ReactNode;
 }) {
+  const { googleAnalytics } = await getDetails();
+  console.log(googleAnalytics?.google_analytics);
   return (
     <html lang="fr" suppressHydrationWarning className={roboto.className}>
       <head />
@@ -69,6 +82,9 @@ export default function RootLayout({
           </SettingsProvider>
         </Providers>
         <Toaster richColors />
+        {googleAnalytics?.google_analytics && (
+          <GoogleAnalytics gaId={googleAnalytics?.google_analytics} />
+        )}
       </body>
     </html>
   );

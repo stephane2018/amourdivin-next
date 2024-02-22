@@ -3,7 +3,7 @@
 import { Card, CardBody } from "@nextui-org/card";
 import { Tab, Tabs } from "@nextui-org/tabs";
 import { CalendarDays } from "lucide-react";
-import React from "react";
+import React, { Key } from "react";
 import ArticleHorizontalSmallItem from "../Articles/article-horizontal-small";
 import PopularArticleWeek from "./components/popular-article-week";
 import PopularArticleMonth from "./components/popular-article-month";
@@ -11,7 +11,7 @@ import PopularArticleYear from "./components/popular-article-year";
 import PopularArticleAllTime from "./components/popular-article-all-time";
 
 export default function SidePopularArticle() {
-  const [selected, setSelected] = React.useState("week");
+  const [selected, setSelected] = React.useState<Key>("week");
 
   return (
     <Card className="border-none   w-full  md:max-w-2xl my-3 flex flex-col">

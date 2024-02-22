@@ -42,6 +42,7 @@ export default async function Featured() {
           <p className="text-tiny text-white uppercase font-bold">
             {moment(data[0]?.created_at.toString()).format("DD/MM/YYYY")}{" "}
           </p>
+
           <h4 className="text-white font-medium ">{data[0].title}</h4>
         </CardHeader>
         <Image

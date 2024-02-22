@@ -77,7 +77,7 @@ export default function Page({}: { children: React.ReactNode }) {
           <div className="col-span-12">
             <CategoriesHeader hideIcon={false} title={"Article Recent"} />
           </div>
-          <div className=" gap-3">
+          <div className=" py-4 gap-3">
             <LoadMoreArticles />
           </div>
         </div>

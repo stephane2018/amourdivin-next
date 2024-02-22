@@ -15,7 +15,7 @@ export async function generateMetadata(
     const img800 = storage.getFilePreview("logo", "logo-512", 800, 600);
     const img1800 = storage.getFilePreview("logo", "logo-512", 1800, 1600);
 
-    const page = await pagesService.getPagesBySlug("contacts");
+    const page = await pagesService.getPagesBySlug("contact");
 
     if (setting === null || page === null)
       return {
