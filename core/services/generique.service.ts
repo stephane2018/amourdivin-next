@@ -1,4 +1,4 @@
-import { Models, Query } from "appwrite";
+import { ID, Models, Query } from "appwrite";
 import { toast } from "sonner";
 import config from "../config/constantes";
 import { database } from "../config/AppwriteConfig";
@@ -44,12 +44,12 @@ class GeneriqueServices {
     }
   }
 
-  public Save(CollectionName: string, id: string, data: any) {
+  public Save(CollectionName: string, data: any, id?: string | null) {
     try {
       const result = database.createDocument(
         this.databaseId,
         CollectionName,
-        id,
+        ID.unique(),
         data
       );
       return Promise.resolve(result);
@@ -59,4 +59,5 @@ class GeneriqueServices {
     }
   }
 }
-export default new GeneriqueServices();
+const GeneriqueService = new GeneriqueServices();
+export default GeneriqueService;

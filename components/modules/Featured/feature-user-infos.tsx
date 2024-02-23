@@ -3,7 +3,7 @@ import CategorieServices from "@/core/services/categories.service";
 import userService from "@/core/services/user.service";
 import { disPlayImageUrl } from "@/core/utils/helpers.utils";
 import { useGetUserById } from "@/hooks/useUser";
-import { Button, Image } from "@nextui-org/react";
+import { Button, Image, Link } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { Eye, MessageCircle } from "lucide-react";
 
@@ -59,15 +59,17 @@ const FeatureUserInfos = async ({ poste }: FeaturedProps) => {
         </div>
       </div>
 
-      <Button
-        style={{
-          backgroundColor: categorie.color,
-        }}
-        radius="full"
-        size="sm"
-      >
-        {categorie.name}
-      </Button>
+      <Link href={`/categories/${categorie.name_slug}`}>
+        <Button
+          style={{
+            backgroundColor: categorie.color,
+          }}
+          radius="full"
+          size="sm"
+        >
+          {categorie.name}
+        </Button>
+      </Link>
     </div>
   );
 };

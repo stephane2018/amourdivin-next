@@ -13,6 +13,7 @@ import CategoriesHeader from "@/components/modules/categories/categorie-header";
 import { useGetRecomendedPosts } from "@/hooks/usePostes";
 import {
   disPlayImageForFrontUrl,
+  disPlayImageUrl,
   getTypeOfArticiles,
 } from "@/core/utils/helpers.utils";
 import moment from "moment";
@@ -33,10 +34,9 @@ const RecommandationFirstItem = ({ postes }: { postes: IPostsModels }) => {
           <h4 className="text-white font-medium ">{postes[0]?.title}</h4>
         </CardHeader>
         <Image
-          removeWrapper
           alt="Relaxing app background"
           className="z-0 w-full h-full object-cover"
-          src={disPlayImageForFrontUrl(postes[0]?.image_default || "")}
+          src={disPlayImageUrl(postes[0]?.image_default || "")}
         />
         {postes[0]?.post_type && (
           <Button

@@ -232,6 +232,22 @@ class PosteService {
       return Promise.reject(error);
     }
   }
+  /**
+   *  Get la listes des produits relatifs
+   * @returns
+   */
+  public async SearchIntoPostes(Commentaire: string) {
+    try {
+      const result = await database.listDocuments<IPostsModels>(
+        this.databaseId,
+        this.CollectionName,
+        [Query.limit(25), Query.search("title", Commentaire)]
+      );
+      return Promise.resolve(result);
+    } catch (error: any) {
+      return Promise.reject(error);
+    }
+  }
 }
 
 const PostesServices = new PosteService();

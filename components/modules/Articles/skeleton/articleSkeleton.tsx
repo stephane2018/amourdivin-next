@@ -7,7 +7,7 @@ const SkeletonArticle: FC<SkeletonArticleInterface> = ({
   isvertical = false,
 }) => {
   return (
-    <Card className="  hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl my-2">
+    <Card className="  hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl my-1">
       <CardBody
         className={`flex ${
           isvertical === true ? "flex-col" : "flex-row flex-grow"

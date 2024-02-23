@@ -1,5 +1,6 @@
 import { Server } from "../config/AppwriteConfig";
 import { TypeOfMedia } from "../enum";
+import dynamic from "next/dynamic";
 
 export const Percent = (trackProgress: number, duration: number) => {
   const per = duration ? `${(trackProgress / duration) * 100}%` : "0%";

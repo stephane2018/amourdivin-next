@@ -3,10 +3,18 @@ import { Metadata, ResolvingMetadata } from "next";
 import settingsService from "@/core/services/settings.service";
 import React from "react";
 import CategoriesHeader from "@/components/modules/categories/categorie-header";
-import Featured from "@/components/modules/Featured/featured";
 import ArticleByThemes from "@/components/modules/Articles/article-by-theme";
-import LoadMoreArticles from "@/components/modules/Articles/LoadMoreArticles";
 import Sidebar from "@/components/modules/Sidebar/sidebar";
+import dynamic from "next/dynamic";
+import ArticleSkeletonList from "@/components/modules/Articles/skeleton/articleSkeleton";
+
+const Featured = dynamic(
+  () => import("@/components/modules/Featured/featured")
+);
+const LoadMoreArticles = dynamic(
+  () => import("@/components/modules/Articles/LoadMoreArticles"),
+  { ssr: false, loading: () => <ArticleSkeletonList /> }
+);
 
 export async function generateMetadata(
   parent: ResolvingMetadata

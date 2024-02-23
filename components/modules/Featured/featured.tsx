@@ -1,5 +1,12 @@
 import React from "react";
-import { Card, CardHeader, CardFooter, Image, Button } from "@nextui-org/react";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  Image,
+  Button,
+  Link,
+} from "@nextui-org/react";
 import FeaturedLoading from "./featured-loading";
 import posteService from "@/core/services/poste.service";
 import {
@@ -43,14 +50,25 @@ export default async function Featured() {
             {moment(data[0]?.created_at.toString()).format("DD/MM/YYYY")}{" "}
           </p>
 
-          <h4 className="text-white font-medium ">{data[0].title}</h4>
+          <Link
+            href={`${data[1].title_slug}`}
+            className="text-white font-medium "
+          >
+            {data[0].title}
+          </Link>
         </CardHeader>
-        <Image
-          removeWrapper
-          alt="Card background"
-          className="z-0 w-full h-full object-cover"
-          src={disPlayImageUrl(data[0].image_default || "")}
-        />
+        <Link
+          href={`${data[0].title_slug}`}
+          className="cursor-pointer  w-full h-full"
+        >
+          <Image
+            removeWrapper
+            alt="Card background"
+            className="z-0 w-full h-full object-cover"
+            src={disPlayImageUrl(data[0].image_default || "")}
+          />
+        </Link>
+
         <IconHandler
           type={getTypeOfArticiles(data[0].post_type)}
           className="h-11 w-11 absolute text-white shadow-xl z-10 top-[43%] left-[43%]"
@@ -62,17 +80,28 @@ export default async function Featured() {
       </Card>
       <Card className="col-span-12 sm:col-span-6 h-[300px]">
         <CardHeader className="absolute z-10 bg-gradient-to-b from-black/90 to-white/2  flex-col !items-start">
-          <p className="text-tiny text-white/60 uppercase font-bold">
+          <p className="text-tiny text-white/60 uppercase font-bold ">
             {moment(data[1]?.created_at.toString()).format("DD/MM/YYYY")}
           </p>
-          <h4 className="text-white font-medium ">{data[1].title}</h4>
+          <Link
+            href={`${data[1].title_slug}`}
+            className="text-white font-medium "
+          >
+            {" "}
+            {data[1].title}
+          </Link>
         </CardHeader>
-        <Image
-          removeWrapper
-          alt="Card background"
-          className="z-0 w-full h-full object-cover"
-          src={disPlayImageUrl(data[1].image_default || "")}
-        />
+        <Link
+          href={`${data[1].title_slug}`}
+          className="cursor-pointer  w-full h-full"
+        >
+          <Image
+            removeWrapper
+            alt="Card background"
+            className="z-0 w-full h-full object-cover"
+            src={disPlayImageUrl(data[1].image_default || "")}
+          />
+        </Link>
         <IconHandler
           type={getTypeOfArticiles(data[1].post_type)}
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
@@ -87,14 +116,25 @@ export default async function Featured() {
           <p className="text-tiny text-white/60    uppercase font-bold">
             {moment(data[2]?.created_at.toString()).format("DD/MM/YYYY")}
           </p>
-          <h4 className="text-white font-medium ">{data[3].title}</h4>
+          <Link
+            href={`${data[3].title_slug}`}
+            className="text-white font-medium "
+          >
+            {" "}
+            {data[1].title}
+          </Link>
         </CardHeader>
-        <Image
-          removeWrapper
-          alt="Card example background"
-          className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
-          src={disPlayImageUrl(data[2].image_default || "")}
-        />
+        <Link
+          href={`${data[1].title_slug}`}
+          className="cursor-pointer  w-full h-full"
+        >
+          <Image
+            removeWrapper
+            alt="Card example background"
+            className="z-0 w-full h-full scale-125 -translate-y-6 object-cover"
+            src={disPlayImageUrl(data[2].image_default || "")}
+          />
+        </Link>
         <IconHandler
           type={getTypeOfArticiles(data[2].post_type)}
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
@@ -111,14 +151,25 @@ export default async function Featured() {
           <p className="text-tiny text-white/60 uppercase font-bold">
             {moment(data[3]?.created_at.toString()).format("DD/MM/YYYY")}
           </p>
-          <h4 className="text-white/90 font-medium ">{data[3].title}</h4>
+
+          <Link
+            href={`${data[3].title_slug}`}
+            className="text-white font-medium "
+          >
+            {data[3].title}
+          </Link>
         </CardHeader>
-        <Image
-          removeWrapper
-          alt="Relaxing app background"
-          className="z-0 w-full h-full object-cover"
-          src={disPlayImageUrl(data[3].image_default || "")}
-        />
+        <Link
+          href={`${data[3].title_slug}`}
+          className="cursor-pointer  w-full h-full"
+        >
+          <Image
+            removeWrapper
+            alt="Relaxing app background"
+            className="z-0 w-full h-full object-cover"
+            src={disPlayImageUrl(data[3].image_default || "")}
+          />
+        </Link>
         <IconHandler
           type={getTypeOfArticiles(data[4].post_type)}
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "

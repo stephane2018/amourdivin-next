@@ -1,3 +1,4 @@
+"use client";
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -30,6 +31,8 @@ import {
 import { Logo } from "@/components/icons";
 import { User } from "lucide-react";
 import { Image } from "@nextui-org/react";
+import { usePathname } from "next/navigation";
+import SearchArticle from "./modules/Articles/searchArticle";
 
 export const Navbar = () => {
   const searchInput = (
@@ -54,9 +57,9 @@ export const Navbar = () => {
   );
 
   return (
-    <NextUINavbar maxWidth="2xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
+    <NextUINavbar isBordered maxWidth="2xl" position="sticky">
+      <NavbarContent className="basis-1/5 sm:basis-full " justify="start">
+        <NavbarBrand as="li" className="gap-3 max-w-full">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <Image
               src={`${process.env.NEXT_PUBLIC_APPWRITE_URL}/storage/buckets/logo/files/logo-16/view?project=647c976995c5b58bf556&mode=admin`}
@@ -65,6 +68,7 @@ export const Navbar = () => {
             />
           </NextLink>
         </NavbarBrand>
+
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
@@ -88,7 +92,9 @@ export const Navbar = () => {
         justify="end"
       >
         <ThemeSwitch />
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <SearchArticle />
+        </NavbarItem>
         <NavbarItem className="hidden md:flex">
           <Button
             as={Link}
@@ -103,15 +109,13 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github} aria-label="Github">
-          <GithubIcon className="text-default-500" />
-        </Link>
         <ThemeSwitch />
+        <SearchArticle />
         <NavbarMenuToggle />
       </NavbarContent>
 
       <NavbarMenu>
-        {searchInput}
+        <SearchArticle />
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
