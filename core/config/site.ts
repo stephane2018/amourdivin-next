@@ -18,7 +18,7 @@ export const siteConfig = {
     },
     {
       label: "A propos de nous",
-      href: "/a-propos-de-nous",
+      href: "/aproposdenous",
     },
     {
       label: "Terme et conditions",
