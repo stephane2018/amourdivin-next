@@ -53,9 +53,8 @@ const RecommandationFirstItem = ({ postes }: { postes: IPostsModels }) => {
     )
   );
 };
-interface RecommandationProps {}
 
-const Recommandation: FC<RecommandationProps> = () => {
+export default function Recommandation() {
   const { data } = useGetRecomendedPosts();
   const postes = data?.documents
     .reverse()
@@ -70,6 +69,7 @@ const Recommandation: FC<RecommandationProps> = () => {
       <Card className="flex flex-col shadow-small border-none  w-full  md:max-w-2xl my-3 ">
         <CardHeader className="flex flex-col ">
           <CategoriesHeader title="Recommadation" hideIcon={false} />
+          {/* @ts-expect-error Server Component */}
           <RecommandationFirstItem postes={postes[0]} />
         </CardHeader>
         <CardBody className="flex flex-col pt-3  ">
@@ -80,6 +80,4 @@ const Recommandation: FC<RecommandationProps> = () => {
       </Card>
     )
   );
-};
-
-export default Recommandation;
+}

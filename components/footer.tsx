@@ -1,27 +1,17 @@
 import { storage } from "@/core/config/AppwriteConfig";
+import { SettingsModels } from "@/core/interfaces/settings";
 import settingsService from "@/core/services/settings.service";
 import { Button, Card, CardBody, Image, Tooltip } from "@nextui-org/react";
 import { Facebook, Youtube } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { FC } from "react";
+import { URL } from "url";
 
-async function getSettings() {
-  try {
-    const setting = await settingsService.get();
-    const simple = storage.getFilePreview("logo", "logo-512");
-    return {
-      logo: simple,
-      setting: setting?.documents[0] || null,
-    };
-  } catch (e) {
-    return {
-      logo: null,
-      setting: null,
-    };
-  }
+interface IFooter {
+  logo: URL;
+  setting: SettingsModels | null;
 }
-export const Footer = async () => {
-  const { logo, setting } = await getSettings();
+export const Footer: FC<IFooter> = ({ logo, setting }) => {
   return (
     <div className="w-full  flex flex-col">
       <Card className="shadow-small  rounded-none ">

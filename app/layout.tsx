@@ -14,6 +14,8 @@ import settingsService from "@/core/services/settings.service";
 import GeneralSettingsService from "@/core/services/general-settings.service";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { general_settings } from "../core/interfaces/general_settings";
+import SettingServices from "@/core/services/settings.service";
+import { storage } from "@/core/config/AppwriteConfig";
 
 const roboto = Roboto({
   weight: "400",
@@ -44,10 +46,13 @@ export const metadata: Metadata = {
 };
 
 async function getDetails() {
-  const setting = await GeneralSettingsService.getSettings(1);
-
+  const Generalsettings = await GeneralSettingsService.getSettings(1);
+  const setting = await settingsService.get();
+  const simple = await storage.getFilePreview("logo", "logo-512");
   return {
-    googleAnalytics: setting?.documents[0],
+    logo: simple,
+    setting: setting?.documents[0] || null,
+    googleAnalytics: Generalsettings?.documents[0],
   };
 }
 export default async function RootLayout({
@@ -55,7 +60,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { googleAnalytics } = await getDetails();
+  const { googleAnalytics, logo, setting } = await getDetails();
 
   return (
     <html lang="fr" suppressHydrationWarning className={roboto.className}>
@@ -75,7 +80,7 @@ export default async function RootLayout({
               <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
                 {children}
               </main>
-              <Footer />
+              <Footer logo={logo} setting={setting} />
             </div>
           </SettingsProvider>
         </Providers>

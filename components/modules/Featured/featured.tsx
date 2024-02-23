@@ -49,7 +49,6 @@ export default async function Featured() {
           <p className="text-tiny text-white uppercase font-bold">
             {moment(data[0]?.created_at.toString()).format("DD/MM/YYYY")}{" "}
           </p>
-
           <Link
             href={`${data[1].title_slug}`}
             className="text-white font-medium "
@@ -75,6 +74,7 @@ export default async function Featured() {
         />
 
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+          {/* @ts-expect-error Server Component */}
           <FeatureUserInfos poste={data[0]} />
         </CardFooter>
       </Card>
@@ -140,6 +140,7 @@ export default async function Featured() {
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+          {/* @ts-expect-error Server Component */}
           <FeatureUserInfos poste={data[3]} />
         </CardFooter>
       </Card>
@@ -171,10 +172,11 @@ export default async function Featured() {
           />
         </Link>
         <IconHandler
-          type={getTypeOfArticiles(data[4].post_type)}
+          type={getTypeOfArticiles(data[3].post_type)}
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+          {/* @ts-expect-error Server Component */}
           <FeatureUserInfos poste={data[3]} />
         </CardFooter>
       </Card>

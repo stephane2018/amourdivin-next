@@ -7,14 +7,16 @@ import ArticleByThemes from "@/components/modules/Articles/article-by-theme";
 import Sidebar from "@/components/modules/Sidebar/sidebar";
 import dynamic from "next/dynamic";
 import ArticleSkeletonList from "@/components/modules/Articles/skeleton/articleSkeleton";
+import Featured from "@/components/modules/Featured/featured";
+import LoadMoreArticles from "@/components/modules/Articles/LoadMoreArticles";
 
-const Featured = dynamic(
-  () => import("@/components/modules/Featured/featured")
-);
-const LoadMoreArticles = dynamic(
-  () => import("@/components/modules/Articles/LoadMoreArticles"),
-  { ssr: false, loading: () => <ArticleSkeletonList /> }
-);
+// const Featured = dynamic(
+//   () => import("@/components/modules/Featured/featured")
+// );
+// const LoadMoreArticles = dynamic(
+//   () => import("@/components/modules/Articles/LoadMoreArticles"),
+//   { ssr: false, loading: () => <ArticleSkeletonList /> }
+// );
 
 export async function generateMetadata(): Promise<Metadata> {
   try {
@@ -76,6 +78,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Page() {
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
+      {/* @ts-expect-error Server Component */}
       <Featured />
       {/* <ArticleByThemes /> */}
       <div className="gap-4 mx-auto container grid grid-cols-1 md:grid-cols-12 w-full mt-4">
