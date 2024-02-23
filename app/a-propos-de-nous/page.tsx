@@ -76,7 +76,7 @@ async function getPageDetails() {
     AproposDeNous: AproposDeNous.documents[0],
   };
 }
-export default async function Page({}: { children: React.ReactNode }) {
+async function Page() {
   const page = await getPageDetails();
 
   return (

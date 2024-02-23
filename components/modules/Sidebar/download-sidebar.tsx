@@ -31,7 +31,7 @@ const PlayStoreButton = () => {
 const AppStoreButton = () => {
   return (
     <div className=" mx-2 flex w-auto   cursor-pointer  rounded-lg bg-black px-4 py-2">
-      <img
+      <Image
         src="https://cdn-icons-png.flaticon.com/512/888/888841.png"
         className="w-7"
         alt="img"

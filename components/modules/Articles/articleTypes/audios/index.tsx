@@ -229,7 +229,7 @@ const Audios = ({ article }: { article: IPostsModels }) => {
       audio?.load();
       controls.play();
     }
-  }, [audio, controls, AudioPlayList, setPlayer, setSongIndex, songIndex]);
+  }, [audio, controls, AudioPlayList, setPlayer, songIndex]);
 
   useEffect(() => {
     auToPlayMusic();

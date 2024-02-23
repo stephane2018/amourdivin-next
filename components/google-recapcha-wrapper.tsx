@@ -3,7 +3,7 @@ import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import React from "react";
 import settingsService from "@/core/services/settings.service";
 import { storage } from "@/core/config/AppwriteConfig";
-import { useGetSettings } from "@/hooks/useSettings";
+import { useGetGeneraleSettings, useGetSettings } from "@/hooks/useSettings";
 
 async function getSettings() {
   try {
@@ -20,14 +20,15 @@ async function getSettings() {
     };
   }
 }
-export default  function GoogleCaptchaWrapper({
+export default function GoogleCaptchaWrapper({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { data:settings, error } = useGetSettings(1);
-  const recaptchaKey: string | undefined = settings?.documents[0] ? settings.documents[0].
-    process?.env?.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+  const { data: general_settings } = useGetGeneraleSettings(1);
+  const recaptchaKey: string | undefined = general_settings?.documents[0]
+    ? general_settings.documents[0].re
+    : process?.env?.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
   return (
     <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey ?? "NOT DEFINED"}>
       {children}

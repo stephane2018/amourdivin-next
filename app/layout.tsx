@@ -52,13 +52,11 @@ async function getDetails() {
 }
 export default async function RootLayout({
   children,
-  featured,
 }: {
   children: React.ReactNode;
-  featured: React.ReactNode;
 }) {
   const { googleAnalytics } = await getDetails();
-  console.log(googleAnalytics?.google_analytics);
+
   return (
     <html lang="fr" suppressHydrationWarning className={roboto.className}>
       <head />

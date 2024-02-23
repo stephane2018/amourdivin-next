@@ -18,7 +18,7 @@ export function useGetSettings(value: number) {
         CollectionName,
         [Query.equal("id", value), Query.limit(1)]
       );
-      // console.log(result);
+
       return result;
     },
   });
