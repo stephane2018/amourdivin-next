@@ -1,7 +1,6 @@
 import { Query } from "appwrite";
 import { database } from "../config/AppwriteConfig";
 import config from "../config/constantes";
-import { GeneralSettingsModels } from "../interfaces/general_settings";
 import { SettingsModels } from "../interfaces/settings";
 
 class SettingService {
@@ -31,4 +30,5 @@ class SettingService {
     }
   }
 }
-export default new SettingService();
+const SettingServices = new SettingService();
+export default SettingServices;

@@ -8,9 +8,7 @@ import { ICategories } from "@/core/interfaces/categories";
 import Link from "next/link";
 
 // getPagesBySlug
-export async function generateMetadata(
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   try {
     const setting = await settingsService.get();
     const simple = storage.getFilePreview("logo", "logo-512", 800, 600);
@@ -89,7 +87,7 @@ const CategoriesItem = ({ data }: { data: ICategories }) => {
   );
 };
 
-export default async function Page({}: { children: React.ReactNode }) {
+export default async function Page() {
   const categories = await getCateogies();
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">

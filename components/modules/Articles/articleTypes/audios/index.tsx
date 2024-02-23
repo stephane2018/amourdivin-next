@@ -5,7 +5,6 @@ import {
   CardBody,
   Image,
   Button,
-  Slider,
   CardFooter,
   Divider,
   CircularProgress,
@@ -20,20 +19,9 @@ import {
   disPlayImageForFrontUrl,
   formatDate,
 } from "@/core/utils/helpers.utils";
-import { TrackMetadata } from "@/hooks/commom/audioPlayer/types";
 import useAudioPlayer from "./hooks/useAudioPlayer";
-import { CameraIcon, HardDriveDownload } from "lucide-react";
-import classNames from "classnames";
-import downloadFile, { handleDownloadFile } from "@/core/utils/doanloadFile";
-
-function formatTime(timeInSeconds: number | null): string {
-  if (timeInSeconds === null) return "";
-  const numberOfMinutes = Math.floor(timeInSeconds / 60);
-  const numberOfSeconds = Math.floor(timeInSeconds - numberOfMinutes * 60);
-  const minutes = `${numberOfMinutes}`.padStart(2, "0");
-  const seconds = `${numberOfSeconds}`.padStart(2, "0");
-  return `${minutes}:${seconds}`;
-}
+import { HardDriveDownload } from "lucide-react";
+import { handleDownloadFile } from "@/core/utils/doanloadFile";
 
 // async function getAudiosData() {}
 const Audios = ({ article }: { article: IPostsModels }) => {
@@ -51,9 +39,7 @@ const Audios = ({ article }: { article: IPostsModels }) => {
     src: AudioPlayList[songIndex]?.audio_path,
     autoPlaySong: true,
   });
-  const currentPercentage = Percent(state.currentTime, state.duration);
 
-  const [buttonState, setButtonState] = useState<boolean>(false);
   const skipRandom = (idx: number) => {
     const randIdx = Math.floor(Math.random() * AudioPlayList.length);
     if (randIdx === idx) {
@@ -285,10 +271,9 @@ const Audios = ({ article }: { article: IPostsModels }) => {
 
             <div className="flex flex-col mt-3 gap-1">
               <ProgressBar
-                rightLabel={formatTime(state.duration)}
-                leftLabel={formatTime(state.currentTime)}
+                duration={state.duration}
+                currentime={state.currentTime}
                 onChange={onScrub}
-                progress={Number(currentPercentage)}
               />
             </div>
 

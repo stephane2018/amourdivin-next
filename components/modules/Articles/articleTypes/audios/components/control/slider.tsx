@@ -1,37 +1,40 @@
 "use client";
+import { Percent, formatDateTime } from "@/core/utils/helpers.utils";
 import { Slider } from "@nextui-org/react";
 
+function formatTime(timeInSeconds: number | null): string {
+  if (timeInSeconds === null) return "";
+  const numberOfMinutes = Math.floor(timeInSeconds / 60);
+  const numberOfSeconds = Math.floor(timeInSeconds - numberOfMinutes * 60);
+  const minutes = `${numberOfMinutes}`.padStart(2, "0");
+  const seconds = `${numberOfSeconds}`.padStart(2, "0");
+  return `${minutes}:${seconds}`;
+}
+
 type ProgressBarProps = {
-  progress: number;
+  duration: number;
+  currentime: number;
   onChange: (value: number) => void;
-  leftLabel: string;
-  rightLabel: string;
 };
 
-const ProgressBar = ({
-  progress,
-  onChange,
-  leftLabel,
-  rightLabel,
-}: ProgressBarProps) => {
+const ProgressBar = ({ onChange, duration, currentime }: ProgressBarProps) => {
   return (
     <div className="flex flex-col mt-3 gap-1">
       <Slider
         aria-label="Music progress"
-        classNames={{
-          track: "bg-default-500/30",
-          thumb: "w-2 h-2 after:w-2 after:h-2 after:bg-foreground",
-        }}
-        color="foreground"
-        defaultValue={progress || 0}
+        color="success"
         size="sm"
+        step={0.01}
+        maxValue={duration}
+        value={currentime}
+        defaultValue={0.7}
         onChange={(event) => {
           onChange(parseInt(event.toString()));
         }}
       />
       <div className="flex justify-between">
-        <p className="text-small">{leftLabel}</p>
-        <p className="text-small text-foreground/50">{rightLabel}</p>
+        <p className="text-small">{formatTime(currentime)}</p>
+        <p className="text-small text-foreground/50">{formatTime(duration)}</p>
       </div>
     </div>
   );

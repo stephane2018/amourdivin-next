@@ -16,9 +16,7 @@ const LoadMoreArticles = dynamic(
   { ssr: false, loading: () => <ArticleSkeletonList /> }
 );
 
-export async function generateMetadata(
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   try {
     const setting = await settingsService.get();
     const simple = storage.getFilePreview("logo", "logo-512", 800, 600);
@@ -75,7 +73,7 @@ export async function generateMetadata(
   }
 }
 
-export default function Page({}: { children: React.ReactNode }) {
+export default function Page() {
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
       <Featured />

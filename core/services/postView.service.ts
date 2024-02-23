@@ -35,7 +35,6 @@ class PostsView {
         [Query.limit(1), Query.orderDesc("$createdAt")]
       );
       if (data !== null) {
-        console.log(data);
         const Lat_id = Number(data?.id) + 1;
         const ipAdress = ip;
         const MonthData: SubmitPostPageviewsMonth = {
@@ -140,7 +139,6 @@ class PostsView {
       Query.equal("created_at", getCurrentMonth().fin),
     ])
       .then(async (data) => {
-        console.log(data);
         if (data?.total === 0) {
           await this.saveViewMontData(poste, ip, userAgent).then(async () => {
             const curentPost = {

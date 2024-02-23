@@ -9,9 +9,7 @@ import pagesService from "@/core/services/pages.service";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote/rsc";
 // getPagesBySlug
-export async function generateMetadata(
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   try {
     const setting = await settingsService.get();
     const simple = storage.getFilePreview("logo", "logo-512", 800, 600);
@@ -76,7 +74,7 @@ async function getPageDetails() {
     AproposDeNous: AproposDeNous.documents[0],
   };
 }
-export default async function Page({}: { children: React.ReactNode }) {
+export default async function Page() {
   const page = await getPageDetails();
 
   return (
