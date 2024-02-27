@@ -69,7 +69,7 @@ export default function Recommandation() {
       <Card className="flex flex-col shadow-small border-none  w-full  md:max-w-2xl my-3 ">
         <CardHeader className="flex flex-col ">
           <CategoriesHeader title="Recommadation" hideIcon={false} />
-          {/* @ts-expect-error Server Component */}
+
           <RecommandationFirstItem postes={postes[0]} />
         </CardHeader>
         <CardBody className="flex flex-col pt-3  ">

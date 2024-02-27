@@ -9,7 +9,6 @@ export default function Sidebar() {
   return (
     <div className="flex flex-col w-full gap-3 md:mt-10">
       <SidePopularArticle />
-      {/* @ts-expect-error Server Component */}
       <Recommandation />
       <CategoriesListSidebar />
       <Newsletter />

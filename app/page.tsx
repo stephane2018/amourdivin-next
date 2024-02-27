@@ -78,7 +78,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function Page() {
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
-      {/* @ts-expect-error Server Component */}
       <Featured />
       {/* <ArticleByThemes /> */}
       <div className="gap-4 mx-auto container grid grid-cols-1 md:grid-cols-12 w-full mt-4">

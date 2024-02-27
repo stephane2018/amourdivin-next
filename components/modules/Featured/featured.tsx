@@ -74,7 +74,6 @@ export default async function Featured() {
         />
 
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-          {/* @ts-expect-error Server Component */}
           <FeatureUserInfos poste={data[0]} />
         </CardFooter>
       </Card>
@@ -140,7 +139,6 @@ export default async function Featured() {
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-          {/* @ts-expect-error Server Component */}
           <FeatureUserInfos poste={data[3]} />
         </CardFooter>
       </Card>
@@ -176,7 +174,6 @@ export default async function Featured() {
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-          {/* @ts-expect-error Server Component */}
           <FeatureUserInfos poste={data[3]} />
         </CardFooter>
       </Card>
