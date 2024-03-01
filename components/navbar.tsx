@@ -63,10 +63,13 @@ export const Navbar = () => {
     >
       <NavbarContent className="basis-1/5 sm:basis-full " justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-full">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
+          <NextLink
+            className="flex w-[150px] justify-start items-center gap-1"
+            href="/"
+          >
             <Image
               src={`${process.env.NEXT_PUBLIC_APPWRITE_URL}/storage/buckets/logo/files/logo-16/view?project=647c976995c5b58bf556&mode=admin`}
-              className="h-10 w-fit"
+              className="h-10 w-full"
               alt="Amourdivin"
             />
           </NextLink>

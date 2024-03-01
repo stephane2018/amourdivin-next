@@ -233,42 +233,21 @@ export default function SocialMediaShare({
             url: link,
             text: articleTitle,
           };
-          if (
-            typeof window !== "undefined" &&
-            navigator &&
-            navigator.canShare(shareData)
-          ) {
-            OpenShareOnPhone({
-              description: description,
-              title: articleTitle,
-              link: link,
-            });
-          } else if (!isMobile && isTablet) {
+          if (isMobile || isTablet) {
+            if (
+              typeof window !== "undefined" &&
+              navigator &&
+              navigator.canShare(shareData)
+            ) {
+              OpenShareOnPhone({
+                description: description,
+                title: articleTitle,
+                link: link,
+              });
+            }
+          } else {
             onOpen();
           }
-          // if (typeof window !== "undefined" && navigator) {
-          //   OpenShareOnPhone({
-          //     description: description,
-          //     title: articleTitle,
-          //     link: link,
-          //   });
-          // } else {
-
-          // }
-          // const shareData: ShareData = {
-          //   url: link,
-          //   text: articleTitle,
-          // };
-          // if (
-          //   typeof window !== "undefined" &&
-          //   navigator &&
-          //   navigator.share &&
-          //   navigator.canShare(shareData)
-          // ) {
-          //   navigator.share(shareData);
-          // } else if(!isMobile && isTablet){
-          //    onOpen();
-          // }
         }}
         isIconOnly
         color="warning"
@@ -286,10 +265,10 @@ export default function SocialMediaShare({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Partager{" "}
+                Partager sur les reseaux sociaux{" "}
               </ModalHeader>
               <ModalBody>
-                <div className="flex gap-4 mb-4">
+                <div className="flex gap-4 mb-4 mx-auto ">
                   {(socialLink || []).map((item, i) => (
                     <ShareSocialLink
                       key={`${i}/share`}
