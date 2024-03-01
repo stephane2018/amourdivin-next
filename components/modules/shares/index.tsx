@@ -209,7 +209,7 @@ export default function SocialMediaShare({
       });
   };
 
-  const OpenShareOnPhone = ({
+  const OpenShareOnPhone = async ({
     title,
     description,
     link,
@@ -218,7 +218,7 @@ export default function SocialMediaShare({
     description: string;
     link: string;
   }) => {
-    Share.share({
+    await Share.share({
       title: title,
       text: description,
       url: link,
@@ -228,7 +228,7 @@ export default function SocialMediaShare({
   return (
     <>
       <Button
-        onPress={() => {
+        onPress={async () => {
           const shareData: ShareData = {
             url: link,
             text: articleTitle,
@@ -236,11 +236,14 @@ export default function SocialMediaShare({
           if (
             typeof window !== "undefined" &&
             navigator &&
-            navigator.share &&
             navigator.canShare(shareData)
           ) {
-            navigator.share(shareData);
-          } else {
+            OpenShareOnPhone({
+              description: description,
+              title: articleTitle,
+              link: link,
+            });
+          } else if (!isMobile && isTablet) {
             onOpen();
           }
           // if (typeof window !== "undefined" && navigator) {
@@ -250,7 +253,21 @@ export default function SocialMediaShare({
           //     link: link,
           //   });
           // } else {
-          onOpen();
+
+          // }
+          // const shareData: ShareData = {
+          //   url: link,
+          //   text: articleTitle,
+          // };
+          // if (
+          //   typeof window !== "undefined" &&
+          //   navigator &&
+          //   navigator.share &&
+          //   navigator.canShare(shareData)
+          // ) {
+          //   navigator.share(shareData);
+          // } else if(!isMobile && isTablet){
+          //    onOpen();
           // }
         }}
         isIconOnly
