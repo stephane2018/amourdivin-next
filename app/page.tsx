@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const setting = await settingsService.get();
     const simple = storage.getFilePreview("logo", "logo-512", 800, 600);
-    const img800 = storage.getFilePreview("logo", "logo-512", 800, 600);
+    const img800 = storage.getFilePreview("logo", "logo-512", 400, 300);
     const img1800 = storage.getFilePreview("logo", "logo-512", 1800, 1600);
 
     if (setting === null)
@@ -44,8 +44,8 @@ export async function generateMetadata(): Promise<Metadata> {
         images: [
           {
             url: img800.href,
-            width: 800,
-            height: 600,
+            width: 400,
+            height: 300,
           },
           {
             url: img1800.href,

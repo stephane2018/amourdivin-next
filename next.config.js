@@ -15,6 +15,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "www.mboasms.cm",
       },
+      {
+        protocol: "http",
+        hostname: "192.168.1.183",
+      },
     ],
   },
 };

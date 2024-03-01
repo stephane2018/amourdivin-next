@@ -20,21 +20,19 @@ import NextLink from "next/link";
 import clsx from "clsx";
 
 import { ThemeSwitch } from "@/components/theme-switch";
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-} from "@/components/icons";
+import { SearchIcon } from "@/components/icons";
 
-import { Logo } from "@/components/icons";
 import { User } from "lucide-react";
 import { Image } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
 import SearchArticle from "./modules/Articles/searchArticle";
+import { useState } from "react";
 
 export const Navbar = () => {
+  const path = usePathname();
+
+  const [isOpen, setisOpen] = useState(false);
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -57,7 +55,12 @@ export const Navbar = () => {
   );
 
   return (
-    <NextUINavbar isBordered maxWidth="2xl" position="sticky">
+    <NextUINavbar
+      isBordered
+      maxWidth="2xl"
+      position="sticky"
+      isMenuOpen={isOpen}
+    >
       <NavbarContent className="basis-1/5 sm:basis-full " justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-full">
           <NextLink className="flex justify-start items-center gap-1" href="/">
@@ -92,7 +95,7 @@ export const Navbar = () => {
         justify="end"
       >
         <ThemeSwitch />
-        <NavbarItem className="hidden lg:flex">
+        <NavbarItem className="hidden md:flex">
           <SearchArticle />
         </NavbarItem>
         <NavbarItem className="hidden md:flex">
@@ -111,17 +114,16 @@ export const Navbar = () => {
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <SearchArticle />
-        <NavbarMenuToggle />
+        <NavbarMenuToggle onClick={() => setisOpen(!isOpen)} />
       </NavbarContent>
 
       <NavbarMenu>
-        <SearchArticle />
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color={
-                  index === 2
+                  item.href === path
                     ? "success"
                     : index === siteConfig.navItems.length - 1
                     ? "danger"
@@ -129,6 +131,7 @@ export const Navbar = () => {
                 }
                 href={item.href}
                 size="lg"
+                onClick={() => setisOpen(false)}
               >
                 {item.label}
               </Link>

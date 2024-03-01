@@ -25,7 +25,7 @@ const PageViews: FC<IPageView> = ({ children, postes }) => {
 
   useEffect(() => {
     const userAgentData = navigator.userAgent;
-    console.log(userAgentData);
+
     if (userAgentData && postes !== undefined) {
       CountView(postes, userAgentData);
     }

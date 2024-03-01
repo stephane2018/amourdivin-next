@@ -85,11 +85,13 @@ const LoadMoreCategories: FC<ICategoriesList> = ({
       {isLoading || isFetchingNextPage ? (
         <ArticleSkeletonList item={10} isvertical />
       ) : null}
+
       {data?.pages === undefined ? (
         <Card className="gap-4 flex h-36 justify-center items-center">
           Aucun article disponible dans cette categorie
         </Card>
       ) : null}
+
       <Button
         onClick={() => fetchNextPage()}
         isLoading={status === "pending"}

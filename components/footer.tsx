@@ -14,9 +14,9 @@ interface IFooter {
 export const Footer: FC<IFooter> = ({ logo, setting }) => {
   return (
     <div className="w-full  flex flex-col">
-      <Card className="shadow-small  rounded-none ">
+      <Card className="shadow-small rounded-none ">
         <div className=" mx-auto gap-5 container flex flex-col mb-4">
-          <div className="flex md:justify-between w-full p-4 gap-4">
+          <div className="flex flex-col md:flex-row md:justify-between w-full p-4 gap-4">
             <div className=" w-full flex flex-col gap-4 ">
               {logo && (
                 <Image
