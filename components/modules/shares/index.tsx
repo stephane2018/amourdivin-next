@@ -1,9 +1,12 @@
 "use client";
+import { IPostsModels } from "@/core/interfaces/posts";
+import { disPlayImageForFrontUrl } from "@/core/utils/helpers.utils";
 import { useCopyToClipboard } from "@/hooks/commom/useClilBoard";
 import { Share } from "@capacitor/share";
 import {
   Button,
   Chip,
+  Image,
   Input,
   Modal,
   ModalBody,
@@ -174,12 +177,10 @@ const ShareSocialLink = ({
 };
 export default function SocialMediaShare({
   link,
-  articleTitle,
-  description,
+  article,
 }: {
   link: string;
-  description: string;
-  articleTitle: string;
+  article: IPostsModels;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -209,52 +210,52 @@ export default function SocialMediaShare({
       });
   };
 
-  const OpenShareOnPhone = async ({
-    title,
-    description,
-    link,
-  }: {
-    title: string;
-    description: string;
-    link: string;
-  }) => {
-    await Share.share({
-      title: title,
-      text: description,
-      url: link,
-      dialogTitle: "Share",
-    });
-  };
+  // const OpenShareOnPhone = async ({
+  //   title,
+  //   description,
+  //   link,
+  // }: {
+  //   title: string;
+  //   description: string;
+  //   link: string;
+  // }) => {
+  //   await Share.share({
+  //     title: title,
+  //     text: description,
+  //     url: link,
+  //     dialogTitle: "Share",
+  //   });
+  // };
   return (
     <>
       <Button
         onPress={async () => {
-          const shareData: ShareData = {
-            url: link,
-            text: articleTitle,
-          };
-          if (isMobile || isTablet) {
-            if (
-              typeof window !== "undefined" &&
-              navigator &&
-              navigator.canShare(shareData)
-            ) {
-              OpenShareOnPhone({
-                description: description,
-                title: articleTitle,
-                link: link,
-              });
-            }
-          } else {
-            onOpen();
-          }
+          // const shareData: ShareData = {
+          //   url: link,
+          //   text: article.title,
+          // };
+          // if (isMobile || isTablet) {
+          //   if (
+          //     typeof window !== "undefined" &&
+          //     navigator &&
+          //     navigator.canShare(shareData)
+          //   ) {
+          //     OpenShareOnPhone({
+          //       description: article.summary,
+          //       title: article.title,
+          //       link: link,
+          //     });
+          //   }
+          // } else {
+          onOpen();
+          // }
         }}
-        isIconOnly
         color="warning"
         variant="faded"
         aria-label="share"
+        endContent={<Share2 />}
       >
-        <Share2 />
+        Partager
       </Button>
       <Modal
         isOpen={isOpen}
@@ -274,12 +275,46 @@ export default function SocialMediaShare({
                       key={`${i}/share`}
                       link={link}
                       item={item}
-                      articleTitle={articleTitle}
+                      articleTitle={article.title}
                     />
                   ))}
                 </div>
+                <div className="flex gap-3 p-2 bg-black/60 justify-between rounded-xl">
+                  <Image
+                    alt="Card background"
+                    className="object-cover rounded-xl w-[350px]  h-[70px]  "
+                    src={disPlayImageForFrontUrl(article?.image_default || "")}
+                  />
+                  <div className="flex-col flex gap-3 ">
+                    <span
+                      className={
+                        "line-clamp-2 text-[11px] cursor-pointer font-bold text-black dark:text-white  "
+                      }
+                    >
+                      {article.title}
+                    </span>
+                    <span
+                      className={
+                        "line-clamp-1 text-[9px] cursor-pointer  md:text-sm text-default-500 text-black/60 dark:text-gray-300 "
+                      }
+                    >
+                      {article.summary}
+                    </span>
+                  </div>
+                  <div className="line-clamp-2 text-sm cursor-pointer font-bold text-black dark:text-white  ">
+                    {copyStatus ? (
+                      <CheckCheckIcon className="text-4xl p-1 text-green-500  cursor-pointer   flex-shrink-0" />
+                    ) : (
+                      <CopyIcon
+                        className="text-4xl p-1  cursor-pointer text-default-400  flex-shrink-0"
+                        onClick={handleClickCopy}
+                      />
+                    )}
+                  </div>
+                </div>
                 <Input
-                  onTouchEnd={handleClickCopy}
+                  className="hover:cursor-pointer"
+                  onClick={handleClickCopy}
                   disabled={true}
                   endContent={
                     copyStatus ? (

@@ -154,8 +154,7 @@ export default async function Details({
                       <div className="">
                         <SocialMediaShare
                           link={`${process.env.NEXT_PUBLIC_WEB_SITE_URL}/${article.title_slug}`}
-                          articleTitle={article.title}
-                          description={article.summary}
+                          article={article}
                         />
                       </div>
                     </div>
