@@ -200,13 +200,14 @@ export default function SocialMediaShare({
   };
 
   const handleClickCopy = async () => {
-    copyToClipboard(linktext)
+    await navigator.clipboard
+      .writeText(linktext)
       .then((state) => {
         setCopyStatus(true);
         resetCLipBoardStatus();
       })
       .catch((e) => {
-        toast.error("une erreur est");
+        toast.error("une erreur est survenue");
       });
   };
 
@@ -279,7 +280,10 @@ export default function SocialMediaShare({
                     />
                   ))}
                 </div>
-                <div className="flex gap-3 p-2 bg-black/60 justify-between rounded-xl">
+                <div
+                  className="flex gap-3 p-2 bg-gray-300/40 dark:bg-black/60 justify-between rounded-xl"
+                  onClick={() => handleClickCopy()}
+                >
                   <Image
                     alt="Card background"
                     className="object-cover rounded-xl w-[350px]  h-[70px]  "
@@ -307,23 +311,25 @@ export default function SocialMediaShare({
                     ) : (
                       <CopyIcon
                         className="text-4xl p-1  cursor-pointer text-default-400  flex-shrink-0"
-                        onClick={handleClickCopy}
+                        onClick={() => handleClickCopy()}
                       />
                     )}
                   </div>
                 </div>
                 <Input
                   className="hover:cursor-pointer"
-                  onClick={handleClickCopy}
                   disabled={true}
                   endContent={
                     copyStatus ? (
                       <CheckCheckIcon className="text-4xl p-1 text-green-500  cursor-pointer   flex-shrink-0" />
                     ) : (
-                      <CopyIcon
-                        className="text-4xl p-1  cursor-pointer text-default-400  flex-shrink-0"
-                        onClick={handleClickCopy}
-                      />
+                      <div className="flex text-[11px] gap-3 cursor-pointer">
+                        <span className="">Copier</span>
+                        <CopyIcon
+                          className="text-4xl p-1  text-default-400  flex-shrink-0"
+                          onClick={() => handleClickCopy()}
+                        />
+                      </div>
                     )
                   }
                   value={`${link}`}
