@@ -16,6 +16,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { general_settings } from "../core/interfaces/general_settings";
 import SettingServices from "@/core/services/settings.service";
 import { storage } from "@/core/config/AppwriteConfig";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const roboto = Roboto({
   weight: "400",
@@ -88,6 +89,7 @@ export default async function RootLayout({
         {googleAnalytics?.google_analytics && (
           <GoogleAnalytics gaId={googleAnalytics?.google_analytics} />
         )}
+        <SpeedInsights />
       </body>
     </html>
   );
