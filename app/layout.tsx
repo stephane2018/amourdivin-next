@@ -3,7 +3,6 @@ import { Metadata } from "next";
 import { fontSans } from "@/core/config/fonts";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
-import { Link } from "@nextui-org/link";
 import clsx from "clsx";
 import Footer from "@/components/footer";
 import { Toaster } from "sonner";
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
 async function getDetails() {
   const Generalsettings = await GeneralSettingsService.getSettings(1);
   const setting = await settingsService.get();
-  const simple = await storage.getFilePreview("logo", "logo-512");
+  const simple = storage.getFilePreview("logo", "logo-512");
   return {
     logo: simple,
     setting: setting?.documents[0] || null,
