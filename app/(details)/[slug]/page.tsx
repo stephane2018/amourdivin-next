@@ -24,6 +24,7 @@ type Props = {
   params: { slug: string };
 };
 
+// getPagesBySlug
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const setting = await settingsService.get();
@@ -99,114 +100,114 @@ export default async function Details({
   const { article } = await getDetails(params.slug || "");
   return (
     <>
-      {/* <PageViews postes={article}> */}
-      <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-        <div className="gap-4 mx-auto container max-w-5xl ">
-          <div className=" h-full w-full flex-col flex  gap-4 ">
-            <Card className="flex gap-4 p-3">
-              <ul className=" flex gap-2 list-none">
-                <li className=" gap-3 flex items-center justify-center ">
-                  <Link
-                    href={"/"}
-                    className="hover:text-primary-500 transition-colors duration-300 mx-auto"
-                  >
-                    <Home size={15} className="text-foreground-700" />
-                  </Link>
-                  {<ChevronRight size={15} />}
-                </li>
-                <li className=" gap-4 flex items-center justify-center">
-                  <span className="text-foreground-700 transition-colors duration-300">
-                    {article.title}
-                  </span>
-                </li>
-              </ul>
-            </Card>
-
-            <div className=" w-full py-2 grid grid-cols-1 md:grid-cols-12 gap-4 md:justify-between ">
-              <Card className="grid md:col-span-8 gap-4 p-3">
-                <div className="flex flex-col gap-4">
-                  <div className="gap-4 flex-wrap ">
-                    <h3
-                      className={title({
-                        color: "green",
-                        size: "sm",
-                        class: "text-large  my-auto  justify-left flex pt-4 ",
-                      })}
+      <PageViews postes={article}>
+        <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
+          <div className="gap-4 mx-auto container max-w-5xl ">
+            <div className=" h-full w-full flex-col flex  gap-4 ">
+              <Card className="flex gap-4 p-3">
+                <ul className=" flex gap-2 list-none">
+                  <li className=" gap-3 flex items-center justify-center ">
+                    <Link
+                      href={"/"}
+                      className="hover:text-primary-500 transition-colors duration-300 mx-auto"
                     >
-                      {article?.title}
-                    </h3>
-                  </div>
-                  <div className="flex w-full py-2 md:flex-row flex-col gap-4 flex-wrap md:justify-between ">
-                    <h3
-                      className={subtitle({
-                        class:
-                          "text-justify   text-default-500 text-black/60 dark:text-gray-300",
-                      })}
-                    >
-                      {article?.summary}
-                    </h3>
-                  </div>
-                  <div className="flex w-full py-2  flex-row gap-4 justify-between ">
-                    <div className="gap-4">
-                      <UserInfosChip type="DETAILS" id={article.user_id} />
-                    </div>
-                    <div className="">
-                      <SocialMediaShare
-                        link={`${process.env.NEXT_PUBLIC_WEB_SITE_URL}/${article.title_slug}`}
-                        article={article}
-                      />
-                    </div>
-                  </div>
+                      <Home size={15} className="text-foreground-700" />
+                    </Link>
+                    {<ChevronRight size={15} />}
+                  </li>
+                  <li className=" gap-4 flex items-center justify-center">
+                    <span className="text-foreground-700 transition-colors duration-300">
+                      {article.title}
+                    </span>
+                  </li>
+                </ul>
+              </Card>
 
-                  <div className="flex flex-col mx-auto gap-4">
-                    {article?.post_type === EnumPosteType.ARTICLES && (
-                      <div className="flex flex-col mx-auto gap-4">
-                        <Image
-                          alt="Card background"
-                          className="object-cover rounded-xl w-[700px] h-[15rem] md:h-[20rem] "
-                          src={disPlayImageForFrontUrl(
-                            article?.image_default || ""
-                          )}
-                        />
-                        <span className="mx-auto flex s">
-                          {article?.image_description || ""}
-                        </span>
+              <div className=" w-full py-2 grid grid-cols-1 md:grid-cols-12 gap-4 md:justify-between ">
+                <Card className="grid md:col-span-8 gap-4 p-3">
+                  <div className="flex flex-col gap-4">
+                    <div className="gap-4 flex-wrap ">
+                      <h3
+                        className={title({
+                          color: "green",
+                          size: "sm",
+                          class: "text-large  my-auto  justify-left flex pt-4 ",
+                        })}
+                      >
+                        {article?.title}
+                      </h3>
+                    </div>
+                    <div className="flex w-full py-2 md:flex-row flex-col gap-4 flex-wrap md:justify-between ">
+                      <h3
+                        className={subtitle({
+                          class:
+                            "text-justify   text-default-500 text-black/60 dark:text-gray-300",
+                        })}
+                      >
+                        {article?.summary}
+                      </h3>
+                    </div>
+                    <div className="flex w-full py-2  flex-row gap-4 justify-between ">
+                      <div className="gap-4">
+                        <UserInfosChip type="DETAILS" id={article.user_id} />
                       </div>
+                      <div className="">
+                        <SocialMediaShare
+                          link={`${process.env.NEXT_PUBLIC_WEB_SITE_URL}/${article.title_slug}`}
+                          article={article}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col mx-auto gap-4">
+                      {article?.post_type === EnumPosteType.ARTICLES && (
+                        <div className="flex flex-col mx-auto gap-4">
+                          <Image
+                            alt="Card background"
+                            className="object-cover rounded-xl w-[700px] h-[15rem] md:h-[20rem] "
+                            src={disPlayImageForFrontUrl(
+                              article?.image_default || ""
+                            )}
+                          />
+                          <span className="mx-auto flex s">
+                            {article?.image_description || ""}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <Videos
+                      type={article?.post_type}
+                      youtubeUrl={article?.video_url}
+                    />
+
+                    {article?.post_type === EnumPosteType.AUDIOS ? (
+                      <Audios article={article} />
+                    ) : (
+                      ""
+                    )}
+
+                    <MakDownContentText content={article?.content} />
+
+                    {article?.post_type === EnumPosteType.AUDIOS ||
+                    article?.post_type === EnumPosteType.ARTICLES ? (
+                      <FileList article={article} />
+                    ) : (
+                      ""
                     )}
                   </div>
-
-                  <Videos
-                    type={article?.post_type}
-                    youtubeUrl={article?.video_url}
-                  />
-
-                  {article?.post_type === EnumPosteType.AUDIOS ? (
-                    <Audios article={article} />
-                  ) : (
-                    ""
-                  )}
-
-                  <MakDownContentText content={article?.content} />
-
-                  {article?.post_type === EnumPosteType.AUDIOS ||
-                  article?.post_type === EnumPosteType.ARTICLES ? (
-                    <FileList article={article} />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </Card>
-              <div className="grid md:col-span-4 ">
-                <div className="flex flex-col h-fit">
-                  <CategoriesListSidebar />
-                  <Newsletter />
+                </Card>
+                <div className="grid md:col-span-4 ">
+                  <div className="flex flex-col h-fit">
+                    <CategoriesListSidebar />
+                    <Newsletter />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-      {/* </PageViews>*/}
+        </section>
+      </PageViews>
     </>
   );
 }
