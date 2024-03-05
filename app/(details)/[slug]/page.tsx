@@ -24,7 +24,6 @@ type Props = {
   params: { slug: string };
 };
 
-// getPagesBySlug
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const setting = await settingsService.get();
