@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   env: {
     APPWRITE_PROJECT: process.env.NEXT_PUBLIC_APPWRITE_PROJECT,
     DATABSE_URL: process.env.DATABSE_URL,
