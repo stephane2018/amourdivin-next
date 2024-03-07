@@ -27,7 +27,7 @@ pipeline {
         }
         stage('delete old container'){
             steps{
-                sh "docker rm $(docker ps -a | grep -v 'pipeline-amourdivin_app' | awk 'NR>1 {print $1}')"
+                sh "docker rmi $(docker images | grep "^<none>" | awk "{print $3}")"
             }
         }
         
