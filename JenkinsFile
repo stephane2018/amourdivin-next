@@ -27,7 +27,7 @@ pipeline {
         }
         stage(''){
             steps{
-                sh "docker rm $(docker ps -a | grep -v "pipeline-amourdivin_app" | awk 'NR>1 {print $1}')"
+                sh "docker rm $(docker ps -a | grep -v 'pipeline-amourdivin_app' | awk NR>1 {print $1}')"
             }
         }
         
