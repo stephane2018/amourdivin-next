@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git url: 'git url: 'git@github.com:stephane2018/amourdivinclient.git', branch: 'deploy', credentialsId: 'githubssh''
+                git url: 'git@github.com:stephane2018/amourdivinclient.git', branch: 'deploy', credentialsId: 'ssh-jenkins-credentails'
             }
         }
         stage('Build Docker Image') {
