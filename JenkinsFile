@@ -19,13 +19,6 @@ pipeline {
                 }
             }
         }
-        stage('Deploy and execute') {
-            steps {
-                sh 'docker-compose up -d'
-                sh 'docker run -d 3000:3000 pipeline-amourdivin_app'
-            }
-        }
-        
         stage('Clean Up (Optional)') {
             steps {
                 // Get the tag of the previous image (adjust if tag naming convention differs)
@@ -36,6 +29,13 @@ pipeline {
             }
             
         }
+        stage('Deploy and execute') {
+            steps {
+                sh 'docker-compose up -d'
+                sh 'docker run -d 3000:3000 pipeline-amourdivin_app'
+            }
+        }
+        
         stage('remove unysed Images ') {
             steps {
                 sh 'docker image prune'
