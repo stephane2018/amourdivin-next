@@ -21,10 +21,10 @@ pipeline {
         }
         stage('Clean Up (Optional)') {
             steps {
-               sh '''
+                // Get all images with non-latest tags
+                sh '''
                 images=$(docker images | grep -vE '^<none>|^REPOSITORY|latest$' | awk '{print $3}')
                 '''
-    
                 if (!images.isEmpty()) {
                     echo "WARNING: The following images will be deleted:"
                     echo "$images"
@@ -34,7 +34,7 @@ pipeline {
     
                     if (confirm) {
                         echo "Deleting images..."
-                        sh "docker rmi $images"
+                        sh "docker rmi ${images}" // Corrected syntax for string interpolation
                     } else {
                         echo "Deletion cancelled."
                     }
