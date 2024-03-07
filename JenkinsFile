@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'deploy',
+                   credentialsId: 'githubssh',
+                   url: 'https://github.com/stephane2018/amourdivin-next.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker-compose build app'
+            }
+        }
+        stage('Tag Docker Image') {
+            steps {
+                script {
+                    def version = env.BUILD_ID
+                    sh "docker tag amourdivin-next:latest amourdivin-next:${version}"
+                }
+            }
+        }
+        stage('Deploy to Docker Compose') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+    }
+}
