@@ -21,14 +21,21 @@ pipeline {
         }
         stage('Clean Up (Optional)') {
             steps {
-                // Get the tag of the previous image (adjust if tag naming convention differs)
-                sh 'previous_image=$(docker images -f "dangling=true" -q | head -n 1)'
-    
-                // Delete the previous image (if exists)
-                sh 'docker rmi ${previous_image}'
+                sh '''
+                # Get all containers in long format
+                container_list=$(docker ps -l)
+                
+                # Filter the list based on image name and sort by created time (descending)
+                last_container_id=$(echo "$container_list" | grep "your_username/amourdivin-next" | tail -n 1 | awk '{print $1}')
+                image_id=$1
+  
+                docker rm -f $(docker ps -a -q --filter="ancestor=$image_id") 2>&- || echo "Found no containers for that image"
+                docker rmi $image_id
+                echo "Image deleted successfully"
+                '''
             }
             
-        }
+        } 
         stage('Deploy and execute') {
             steps {
                 sh 'docker-compose up -d'
