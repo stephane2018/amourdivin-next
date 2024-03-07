@@ -19,10 +19,23 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Docker Compose') {
+        stage('Deploy and execute') {
             steps {
                 sh 'docker-compose up -d'
-                sh 'docker run -p 3000:3000 pipeline-amourdivin_app'
+                sh 'docker run -d 3000:3000 pipeline-amourdivin_app'
+            }
+        }
+        
+         stage('Clean Up (Optional)') {
+            // Get the tag of the previous image (adjust if tag naming convention differs)
+            sh 'previous_image=$(docker images -f "dangling=true" -q | head -n 1)'
+
+            // Delete the previous image (if exists)
+            sh 'docker rmi ${previous_image}'
+        }
+        stage('remove unysed Images ') {
+            steps {
+                sh 'docker image prune'
             }
         }
     }
