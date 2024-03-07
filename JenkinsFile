@@ -26,10 +26,5 @@ pipeline {
             }
         }
         
-        stage('remove unysed Images ') {
-            steps {
-                sh 'docker image prune'
-            }
-        }
     }
 }
