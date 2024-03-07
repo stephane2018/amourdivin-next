@@ -27,28 +27,7 @@ pipeline {
         }
         stage(''){
             steps{
-                sh '''
-                    # Get a list of container IDs with the <none> tag using their image IDs
-                    none_tagged_containers=$(docker images | grep "<none>" | awk '{print $3}')
-
-                    # Check for empty list before proceeding
-                    if [[ -z "$none_tagged_containers" ]]; then
-                      echo "No containers found with the <none> tag."
-                      exit 0
-                    fi
-
-                    # Print a warning message listing the containers to be deleted
-                    echo "WARNING: The following containers with the <none> tag will be deleted:"
-                    echo "$none_tagged_containers"
-                    
-                    # Prompt for confirmation before deletion
-                    read -p "Are you sure you want to delete these containers? (y/N): " confirmation
-                    echo "Deleting containers..."
-                      for container_id in $none_tagged_containers; do
-                        docker rm "$container_id"
-                    done
-                      
-                '''
+                sh 'docker rm $(docker ps -a | grep -v "pipeline-amourdivin_app" | awk 'NR>1 {print $1}')'
             }
         }
         
