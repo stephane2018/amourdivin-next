@@ -19,7 +19,7 @@ pipeline {
                 }
             }
         }
-        stage('check if port is in user){
+        stage('check if port is in user'){
                 sh "chmod +x check_port_and_stop_container.sh"
                 sh "./check_port_and_stop_container.sh"
         }
