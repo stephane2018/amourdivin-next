@@ -26,7 +26,7 @@ pipeline {
             }
         }
         
-         stage('Clean Up (Optional)') {
+        stage('Clean Up (Optional)') {
             // Get the tag of the previous image (adjust if tag naming convention differs)
             sh 'previous_image=$(docker images -f "dangling=true" -q | head -n 1)'
 
