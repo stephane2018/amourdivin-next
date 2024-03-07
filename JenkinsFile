@@ -19,18 +19,10 @@ pipeline {
                 }
             }
         }
-        stage('Clean Up (Optional)') {
-            steps {
-                 sh '''
-                    docker images --format "{{.Repository}}:{{.Tag}}" | grep -v ':latest' | xargs -I {} docker rmi {}
-                '''
-            }
-            
-        } 
         stage('Deploy and execute') {
             steps {
                 sh 'docker-compose up -d'
-                sh 'docker run -d 3000:3000 pipeline-amourdivin_app'
+                sh 'docker run -d -p 3000:3000 pipeline-amourdivin_app'
             }
         }
         
