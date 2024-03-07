@@ -33,7 +33,7 @@ pipeline {
         }
         stage('delete old container'){
             steps{
-                sh 'docker images | grep -v "^<none>" | grep -v "$(docker inspect --format '$(Config.Image)' <<< $(docker ps --quiet))" | docker rmi -f'
+                sh 'docker images | grep -v "^<none>" | grep -v "$(docker inspect --format '$(Config.Image)' $(docker ps --quiet))" | docker rmi -f'
                 sh 'docker image prune -a --force --filter "until=240h"'
 
             }
