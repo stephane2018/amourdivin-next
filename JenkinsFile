@@ -26,11 +26,11 @@ pipeline {
                 container_list=$(docker ps -l)
                 
                 # Filter the list based on image name and sort by created time (descending)
-                last_container_id=$(echo "$container_list" | grep "your_username/amourdivin-next" | tail -n 1 | awk '{print $1}')
-                image_id=$1
+                last_container_id=$(echo "$container_list" | grep "pipeline-amourdivin_app" | tail -n 1 | awk '{print $1}')
+               
   
-                docker rm -f $(docker ps -a -q --filter="ancestor=$image_id") 2>&- || echo "Found no containers for that image"
-                docker rmi $image_id
+                docker rm -f $(docker ps -a -q --filter="ancestor=$last_container_id") 2>&- || echo "Found no containers for that image"
+                docker rmi $last_container_id
                 echo "Image deleted successfully"
                 '''
             }
