@@ -50,7 +50,7 @@ export default async function Featured() {
             {moment(data[0]?.created_at.toString()).format("DD/MM/YYYY")}{" "}
           </p>
           <Link
-            href={`${data[1].title_slug}`}
+            href={`${data[0].title_slug}`}
             className="text-white font-medium "
           >
             {data[0].title}
@@ -116,15 +116,15 @@ export default async function Featured() {
             {moment(data[2]?.created_at.toString()).format("DD/MM/YYYY")}
           </p>
           <Link
-            href={`${data[3].title_slug}`}
+            href={`${data[2].title_slug}`}
             className="text-white font-medium "
           >
             {" "}
-            {data[1].title}
+            {data[2].title}
           </Link>
         </CardHeader>
         <Link
-          href={`${data[1].title_slug}`}
+          href={`${data[2].title_slug}`}
           className="cursor-pointer  w-full h-full"
         >
           <Image
@@ -139,7 +139,7 @@ export default async function Featured() {
           className=" h-12 w-12 absolute text-white shadow-xl z-10 top-[45%] left-[43%] "
         />
         <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
-          <FeatureUserInfos poste={data[3]} />
+          <FeatureUserInfos poste={data[2]} />
         </CardFooter>
       </Card>
       <Card

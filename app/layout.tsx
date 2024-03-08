@@ -88,7 +88,7 @@ export default async function RootLayout({
         {googleAnalytics?.google_analytics && (
           <GoogleAnalytics gaId={googleAnalytics?.google_analytics} />
         )}
-        <SpeedInsights />
+        {/* <SpeedInsights /> */}
       </body>
     </html>
   );
