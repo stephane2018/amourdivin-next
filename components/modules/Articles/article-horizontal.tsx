@@ -31,7 +31,11 @@ const ArticleHorizontalItem: FC<IArticleH> = ({
   isInCategoriePage = false,
 }) => {
   return (
-    <Card className="  hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl my-3">
+    <Card
+      className={`hover:shadow-large  transition-transform ease-in-out  duration-300  w-full   md:max-w-2xl ${
+        isVertical ? "my-4" : "my-2"
+      }`}
+    >
       <CardBody
         className={`grid ${
           isVertical ? "grid-cols-1" : "grid-cols-5"

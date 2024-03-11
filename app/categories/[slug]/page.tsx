@@ -17,6 +17,9 @@ import { ChevronRight, Home } from "lucide-react";
 import { useRouter } from "next/router";
 import LoadMoreCategories from "@/components/modules/categories/categories-list";
 import { ICategories } from "@/core/interfaces/categories";
+import Sidebar from "@/components/modules/Sidebar/sidebar";
+import CategoriesHeader from "@/components/modules/categories/categorie-header";
+import LoadMoreArticles from "@/components/modules/Articles/LoadMoreArticles";
 
 type Props = {
   params: { slug: string };
@@ -109,7 +112,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <section className=" mx-auto container  items-center justify-center gap-4 py-2 md:py-5">
-      <div className="gap-4 mx-auto container max-w-5xl mt-4">
+      {/* <div className="gap-4 mx-auto container max-w-5xl mt-4">
         <div className=" h-full w-full flex-col flex  gap-4 ">
           <Card className="flex gap-4 p-3">
             <ul className=" flex gap-2 list-none">
@@ -166,7 +169,82 @@ export default async function Page({ params }: { params: { slug: string } }) {
               />
             </div>
           </Card>
+          <div className="gap-">
+            <Sidebar />
+          </div>
         </div>
+      </div> */}
+      <div className="gap-4 mx-auto container grid grid-cols-1 md:grid-cols-12 w-full mt-4">
+        <div className="col-span-12 flex-col gap-4">
+          <Card className="flex w-full flex-col p-4 ">
+            <div className="flex mb-5 bg-black/40 p-3 rounded-xl">
+              <ul className=" flex gap-2 list-none">
+                <li className=" gap-3 flex items-center justify-center ">
+                  <Link
+                    href={"/"}
+                    className="hover:text-primary-500 transition-colors duration-300 mx-auto"
+                  >
+                    <Home size={15} />
+                  </Link>
+                  {<ChevronRight size={15} />}
+                </li>
+                <li className=" gap-4 flex items-center justify-center">
+                  <Link
+                    href={`/categories`}
+                    className="hover:text-primary-500 transition-colors duration-300"
+                  >
+                    {" "}
+                    Categories
+                  </Link>
+                  {<ChevronRight size={15} />}
+                </li>
+                <li className=" gap-4 flex items-center justify-center">
+                  <span className="text-primary-500 transition-colors duration-300">
+                    {categorie?.name}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="flex-col  gap-3">
+              <div className="flex bg-black/20 p-3 w-full rounded-xl ">
+                <h3
+                  className={title({
+                    color: "green",
+                    size: "md",
+                    class:
+                      " md:text-left text-center md:justify-left justify-center flex-wrapflex ",
+                  })}
+                >
+                  {categorie?.name}
+                </h3>
+              </div>
+              <h1
+                className={subtitle({
+                  className: "!text-sm  flex-wrap text-left justify-left ml-4",
+                })}
+              >
+                {categorie?.description}
+              </h1>
+            </div>
+          </Card>
+          <Card className="flex w-full flex-col p-4  mt-4">
+            <LoadMoreCategories
+              slug={categorie?.name_slug}
+              subCategoriesIdList={subCategoriesIdList || []}
+            />
+          </Card>
+        </div>
+        {/* <div className="col-span-7 w-full">
+          <div className=" py-4 gap-3">
+            <LoadMoreCategories
+              slug={categorie?.name_slug}
+              subCategoriesIdList={subCategoriesIdList || []}
+            />
+          </div>
+        </div>
+        <div className="flex-col col-span-5 w-full ">
+          <Sidebar />
+        </div> */}
       </div>
     </section>
   );

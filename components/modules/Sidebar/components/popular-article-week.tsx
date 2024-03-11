@@ -13,6 +13,7 @@ const PopularArticleWeek = ({ isEnable }: { isEnable: boolean }) => {
     isError,
   } = useGetPopularPostsForTheCurrentWeek(isEnable);
 
+  console.log(PosteCurrenWeekList);
   return (
     <div className="max-w-full   dark:bg-gray-900/20 ">
       {isLoading ? <ArticleSmallSkeletonList item={3} /> : null}

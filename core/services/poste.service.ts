@@ -98,7 +98,7 @@ class PosteService {
           Query.lessThanEqual("created_at", getCurrentWeek().fin.toString()),
         ]
       );
-
+      console.log(result);
       return Promise.resolve(result);
     } catch (error: any) {
       return Promise.reject(error);

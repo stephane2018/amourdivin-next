@@ -11,6 +11,7 @@ import ArticleSkeletonList from "../Articles/skeleton/articleSkeleton";
 import CategorieServices from "@/core/services/categories.service";
 import PostesServices from "@/core/services/poste.service";
 import { Card } from "@nextui-org/card";
+import { isMobileOnly } from "react-device-detect";
 
 const SVGPropsSpinner = () => {
   return (
@@ -73,7 +74,7 @@ const LoadMoreCategories: FC<ICategoriesList> = ({
               .filter((c) => c.status === "1")
               .map((article) => (
                 <ArticleHorizontalItem
-                  isVertical
+                  isVertical={isMobileOnly ? false : true}
                   isInCategoriePage={true}
                   key={article.$id}
                   article={article}
@@ -83,7 +84,10 @@ const LoadMoreCategories: FC<ICategoriesList> = ({
         ))}
       </div>
       {isLoading || isFetchingNextPage ? (
-        <ArticleSkeletonList item={10} isvertical />
+        <ArticleSkeletonList
+          item={10}
+          isvertical={isMobileOnly ? false : true}
+        />
       ) : null}
 
       {data?.pages === undefined ? (

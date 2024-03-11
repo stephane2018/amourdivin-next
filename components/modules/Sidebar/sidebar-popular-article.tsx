@@ -12,9 +12,8 @@ import PopularArticleAllTime from "./components/popular-article-all-time";
 
 export default function SidePopularArticle() {
   const [selected, setSelected] = React.useState<Key>("week");
-
   return (
-    <Card className="border-none   w-full  md:max-w-2xl my-3 flex flex-col">
+    <Card className="border-none w-full  md:max-w-2xl my-3 flex flex-col">
       <CardBody>
         <Tabs
           aria-label="Options"
