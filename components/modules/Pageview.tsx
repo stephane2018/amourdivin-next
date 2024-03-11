@@ -1,6 +1,7 @@
 "use client";
 import { IPostsModels } from "@/core/interfaces/posts";
 import postViewService from "@/core/services/postView.service";
+import { getCurrentWeek } from "@/core/utils/helpers.utils";
 import getIPAddress from "@/hooks/getIp";
 import { FC, useEffect, useState } from "react";
 
@@ -14,6 +15,7 @@ const PageViews: FC<IPageView> = ({ children, postes }) => {
 
   async function CountView(postes: IPostsModels, navigatorUserAgent: string) {
     const ipAddress = await getIPAddress();
+
     if ((ipAddress as string) && ipAddress !== "" && postes) {
       postViewService.CountViews(
         ipAddress as string,

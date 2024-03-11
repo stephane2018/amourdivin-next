@@ -35,13 +35,17 @@ export function useGetRecomendedPosts() {
 }
 
 const getObj = async (audiosPostList: string[] | number[]) => {
+  console.log(audiosPostList);
   return database
     .listDocuments<IPostsModels>(
       config.DatabaseUrl,
       config.collectionNames.poste,
       [Query.equal("id", audiosPostList)]
     )
-    .then((result) => result.documents || [])
+    .then((result) => {
+      console.log(result);
+      return result.documents || [];
+    })
     .catch((e) => {
       throw new Error(e);
     });
@@ -71,7 +75,6 @@ export function useGetPopularPostWeek(enable = false) {
     queryKey: [`${prefix}/GetPopularArtucleInWeek`],
     queryFn: async () => {
       const result = await PostesServices.GetPostPageviewsWeek();
-
       return result;
     },
     enabled: Boolean(enable),

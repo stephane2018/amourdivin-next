@@ -124,14 +124,15 @@ export default async function Details({
               </Card>
 
               <div className=" w-full py-2 grid grid-cols-1 md:grid-cols-12 gap-4 md:justify-between ">
-                <Card className="grid md:col-span-8 gap-4 p-3">
+                <Card className=" md:col-span-8 gap-4 p-3">
                   <div className="flex flex-col gap-4">
                     <div className="gap-4 flex-wrap ">
                       <h3
                         className={title({
                           color: "green",
                           size: "sm",
-                          class: "text-large  my-auto  justify-left flex pt-4 ",
+                          class:
+                            "text-large   my-auto  justify-left flex pt-4 ",
                         })}
                       >
                         {article?.title}
@@ -141,7 +142,7 @@ export default async function Details({
                       <h3
                         className={subtitle({
                           class:
-                            "text-justify   text-default-500 text-black/60 dark:text-gray-300",
+                            "text-justify text-sm md:text-large  text-default-500 text-black/60 dark:text-gray-300",
                         })}
                       >
                         {article?.summary}
@@ -164,7 +165,7 @@ export default async function Details({
                         <div className="flex flex-col mx-auto gap-4">
                           <Image
                             alt="Card background"
-                            className="object-cover rounded-xl w-[700px] h-[15rem] md:h-[20rem] "
+                            className="object-cover rounded-xl flex-wrap h-[15rem] md:h-[20rem] "
                             src={disPlayImageForFrontUrl(
                               article?.image_default || ""
                             )}
@@ -197,7 +198,7 @@ export default async function Details({
                     )}
                   </div>
                 </Card>
-                <div className="grid md:col-span-4 ">
+                <div className="grid w-full md:col-span-4 ">
                   <div className="flex flex-col h-fit">
                     <CategoriesListSidebar />
                     <Newsletter />

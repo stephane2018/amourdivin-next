@@ -281,12 +281,12 @@ export default function SocialMediaShare({
                   ))}
                 </div>
                 <div
-                  className="flex gap-3 p-2 bg-gray-300/40 dark:bg-black/60 justify-between rounded-xl"
+                  className="flex gap-3 p-2 bg-gray-300/40 dark:bg-black/60  rounded-xl"
                   onClick={() => handleClickCopy()}
                 >
                   <Image
                     alt="Card background"
-                    className="object-cover rounded-xl w-[350px]  h-[70px]  "
+                    className="object-cover rounded-xl   h-[70px]  "
                     src={disPlayImageForFrontUrl(article?.image_default || "")}
                   />
                   <div className="flex-col flex gap-3 ">

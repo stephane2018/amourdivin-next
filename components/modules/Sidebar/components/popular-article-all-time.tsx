@@ -1,12 +1,7 @@
 "use client";
 import React from "react";
 import ArticleHorizontalSmallItem from "../../Articles/article-horizontal-small";
-import {
-  useGetPopularPostAllTime,
-  useGetPopularPostsForTheCurrentMonths,
-  useGetPopularPostsForTheCurrentWeek,
-  useGetPopularPostyear,
-} from "@/hooks/usePostes";
+import { useGetPopularPostAllTime } from "@/hooks/usePostes";
 import ArticleSmallSkeletonList from "../../Articles/skeleton/articleSkeletonSmall";
 import { Card, CardBody } from "@nextui-org/card";
 import { Info } from "lucide-react";
