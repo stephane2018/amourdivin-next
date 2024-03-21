@@ -1,5 +1,5 @@
 function rem_image() {
-  image_id=$1
+  image_id="pipeline-amourdivin_app"
   
   docker rm -f $(docker ps -a -q --filter="ancestor=$image_id") 2>&- || echo "Found no containers for that image"
   docker rmi $image_id
@@ -7,7 +7,7 @@ function rem_image() {
 }
 
 function docker_clean() {
-  pattern=$1
+  pattern="*"
 
   for image_id in `docker images | grep $pattern | awk '{ print $3}'`
   do
