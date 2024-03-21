@@ -37,7 +37,6 @@ pipeline {
                 sh "chmod +x delete_exited_containers.sh"
                 sh "./delete_exited_containers.sh"
                // sh "docker rm -f ${(docker ps -q --filter ancestor=pipeline-amourdivin_app --format '{{.ID}} {{.CreatedAt}}' | sort -k2 | tail -n +2 | awk '{print $1}')}"
-
             }
         }
         
