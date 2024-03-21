@@ -33,8 +33,8 @@ pipeline {
         }
         stage('delete old container'){
             steps{
-                sh 'docker image prune -a --force --filter "until=240h"'
-
+                 // sh 'docker image prune -a --force --filter "until=240h"'
+                sh 'docker rm -f $(docker ps -q --filter ancestor=pipeline-amourdivin_app --format "{{.ID}} {{.CreatedAt}}" | sort -k2 | tail -n +2 | awk '{print $1}')'
             }
         }
         
