@@ -31,13 +31,12 @@ pipeline {
                 sh 'docker run -d -p 3000:3000 pipeline-amourdivin_app'
             }
         }
-        stage('delete old container'){
+        stage('delete old containers'){
             steps{
                  // sh 'docker image prune -a --force --filter "until=240h"'
                 sh "chmod +x delete_exited_containers.sh"
                 sh "./delete_exited_containers.sh"
                // sh "docker rm -f ${(docker ps -q --filter ancestor=pipeline-amourdivin_app --format '{{.ID}} {{.CreatedAt}}' | sort -k2 | tail -n +2 | awk '{print $1}')}"
-
             }
         }
         
