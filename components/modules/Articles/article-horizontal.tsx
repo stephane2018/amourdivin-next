@@ -51,7 +51,13 @@ const ArticleHorizontalItem: FC<IArticleH> = ({
               alt="Card background"
               width={isVertical ? 500 : 250}
               className="object-cover rounded-xl   h-[8rem] md:h-[10rem]"
-              src={disPlayImageForFrontUrl(article?.image_default || "")}
+              src={disPlayImageForFrontUrl(
+                article?.image_default || "",
+                false,
+                `&preview?width=${
+                  isVertical ? 500 : 250
+                }&height=128&quality=50&output=webp`
+              )}
             />
           </Link>
 

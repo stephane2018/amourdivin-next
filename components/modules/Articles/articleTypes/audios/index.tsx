@@ -237,7 +237,11 @@ const Audios = ({ article }: { article: IPostsModels }) => {
               className="object-cover !h-[200px]"
               height={50}
               shadow="md"
-              src={`${disPlayImageForFrontUrl(article?.image_default || "")}`}
+              src={`${disPlayImageForFrontUrl(
+                article?.image_default || "",
+                false,
+                `&preview?width=100&height=128&quality=50&output=webp`
+              )}`}
               width="100%"
             />
           </div>
